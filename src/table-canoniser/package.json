@@ -1,6 +1,6 @@
 {
   "name": "table-canoniser",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Define a declarative grammar that transforms messy data (non-aligned tables) into canonical/tidy tables (axis-aligned tables).",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

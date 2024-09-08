@@ -454,7 +454,7 @@ const case3_spec: TableCanoniserTemplate = {
                     },
                 ],
                 traverse: {
-                    yDirection: "whole",
+                    yDirection: 'beforeAndAfter',
                 }
             },
             children: [
@@ -512,7 +512,7 @@ const case3_spec: TableCanoniserTemplate = {
                     },
                 ],
                 traverse: {
-                    yDirection: "whole",
+                    yDirection: 'beforeAndAfter',
                 }
             },
             extract: {

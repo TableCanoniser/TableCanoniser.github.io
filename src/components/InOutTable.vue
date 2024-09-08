@@ -309,7 +309,7 @@ function initEventsForTbl(tbl: "input_tbl" | "output_tbl") {
   // 因为添加了对tbl的修改监听，所以这些钩子函数可以不用定义
   tblInst1.addHook("afterChange", (changes, source) => {
     // 修改单元格内容后的回调
-    if (changes) {
+    if (changes && changes.some(ci => ci[2] !== ci[3])) {
       if (tbl === "input_tbl") {
         tableStore.clearStatus("miniHighlight");
         tableStore.initTblInfo(false);

@@ -1,4 +1,4 @@
-import { Table2D, TableCanoniserTemplate, CellInfo, AllParams, AreaInfo, RegionPosition } from "./grammar";
+import { Table2D, TableCanoniserTemplate, CellValueType, CellInfo, AllParams, AreaInfo, RegionPosition } from "./grammar";
 export declare function serialize(obj: any): string;
 export declare const getCellBySelect: (select: AllParams<RegionPosition>, currentArea: AreaInfo, rootArea: AreaInfo, constrFlag?: boolean) => CellInfo | null;
 /**
@@ -9,4 +9,7 @@ export declare function transformTable(table: Table2D, specs: TableCanoniserTemp
         [key: string]: CellInfo[];
     };
     rootArea: AreaInfo;
+    template2Cols: {
+        [key: string]: Set<CellValueType>;
+    };
 };

@@ -16,6 +16,9 @@ export function serialize(obj: any): string {
     }, 2);
 }
 
+// store the target columns for each template
+var template2Cols: { [key: string]: Set<CellValueType> } = {};
+
 // Helper function to evaluate constraints
 const evaluateConstraint = (cellValue: CellValueType, constraint: CellConstraint): boolean => {
     if (typeof constraint.valueCstr === 'function') {
@@ -111,12 +114,13 @@ const getSubArea = (table: Table2D, x: number, y: number, width: number, height:
 }
 
 // 如果tidyData中的列长短不一样，则使用 template.fill 填充所有短的列，使每一列都有相同的长度
-const fillColumns = (tidyData: { [key: string]: CellInfo[] }, fill: CellValueType | null) => {
+const fillColumns = (cols: Set<CellValueType>, tidyData: { [key: string]: CellInfo[] }, fill: CellValueType | null) => {
     if (fill === null) return;
     // 获取所有列的最大长度
     const maxLength = Math.max(...Object.values(tidyData).map(column => column.length));
     // 对每一列进行填充处理
     for (const key in tidyData) {
+        if (!cols.has(key)) continue;
         const column = tidyData[key];
         const fillValue = fill === TableCanoniserKeyWords.Forward ? column[column.length - 1] : {
             x: -1,
@@ -331,24 +335,18 @@ const transformArea = (template: AllParams<TableCanoniserTemplate>, currentArea:
                 ctxCols.push(customMapColbyCxt(ctxCells));
             })
 
-            /*
-        if (context.toTargetCol === null) {
-            ctxCellsInfo.forEach((cellCtxsInfo) => {
-                // ctxCols.push(cellCtxsInfo[0].value === undefined ? null : cellCtxsInfo[0].value.toString());
-                ctxCols.push(cellCtxsInfo[0].value);
-            })
-        } else {
-            const customMapColbyCxt = context.toTargetCol
-            ctxCellsInfo.forEach((ctxCells) => {
-                ctxCols.push(customMapColbyCxt(ctxCells));
-            })
-        }*/
             transformedCols = ctxCols
         } else if (template.extract.byValue !== undefined) {
             transformedCols = template.extract.byValue(currentArea.areaTbl);
         } else {
             throw new CustomError(`Please specify 'byPositionToTargetCols', 'byContext', or 'byValue' for extraction`, 'NoExtractionSpecified');
         }
+        const templateRefStr = currentArea.templateRef.toString();
+        if (!template2Cols.hasOwnProperty(templateRefStr)) {
+            template2Cols[templateRefStr] = new Set();
+        }
+        const validCols: Set<CellValueType> = template2Cols[templateRefStr];
+
         transformedCols.forEach((targetCol, index) => {
             if (targetCol !== null && targetCol !== undefined && targetCol !== '') {
                 const cellInfo: CellInfo = {
@@ -361,8 +359,17 @@ const transformArea = (template: AllParams<TableCanoniserTemplate>, currentArea:
                 } else {
                     tidyData[targetCol] = [cellInfo];
                 }
+                validCols.add(targetCol);
             }
         })
+
+        for (let i = 1; i < currentArea.templateRef.length; i++) {
+            const parentRefStr = currentArea.templateRef.slice(0, i).toString();
+            if (!template2Cols.hasOwnProperty(parentRefStr)) {
+                template2Cols[parentRefStr] = new Set();
+            }
+            template2Cols[parentRefStr] = new Set([...template2Cols[parentRefStr], ...validCols]);
+        }
     }
     /*
     console.log(JSON.stringify(tidyData, (key, value) => {
@@ -413,7 +420,7 @@ const processTemplate = (template: AllParams<TableCanoniserTemplate>, currentAre
     } else if (xDirection === 'after') {
         startX = offsetX;
         endX = currentArea.width - 1;
-    } else {  //  if (xDirection === 'whole')
+    } else {  //  if (xDirection === 'beforeAndAfter')
         startX = 0;
         endX = currentArea.width - 1;
     }
@@ -428,7 +435,7 @@ const processTemplate = (template: AllParams<TableCanoniserTemplate>, currentAre
     } else if (yDirection === 'after') {
         startY = offsetY;
         endY = currentArea.height - 1;
-    } else {  // if (yDirection === 'whole')
+    } else {  // if (yDirection === 'beforeAndAfter')
         startY = 0;
         endY = currentArea.height - 1;
     }
@@ -444,14 +451,15 @@ const processTemplate = (template: AllParams<TableCanoniserTemplate>, currentAre
             template.children.forEach((templateChild, ti) => {
                 processTemplate(templateChild, areaChild, rootArea, tidyData, ti);
             });
+            const templateCols = template2Cols[areaChild.templateRef.toString()];
             if (template.fill === TableCanoniserKeyWords.Auto) {
-                if (index.templateRef.length > 1) {
-                    fillColumns(tidyData, null);
+                if (areaChild.templateRef.length > 1) {
+                    fillColumns(templateCols, tidyData, null);
                 } else {
-                    fillColumns(tidyData, "");
+                    fillColumns(templateCols, tidyData, "");
                 }
             } else {
-                fillColumns(tidyData, template.fill);
+                fillColumns(templateCols, tidyData, template.fill);
             }
         })
     }
@@ -483,16 +491,12 @@ export function transformTable(table: Table2D, specs: TableCanoniserTemplate[]) 
 
     const tidyData: { [key: string]: CellInfo[] } = {}
 
+    template2Cols = {};
+
     specs.forEach((template, ti) => {
         const specWithDefaults = completeSpecification(template);
         processTemplate(specWithDefaults, rootArea, rootArea, tidyData, ti);
-        // fillColumns(tidyData, specWithDefaults.fill);
-        // if (specWithDefaults.fill === undefined && specWithDefaults.children.length > 1) {
-        //     fillColumns(tidyData, "");
-        // } else {
-        //     fillColumns(tidyData, specWithDefaults.fill);
-        // }
     });
 
-    return { tidyData, rootArea };
+    return { tidyData, rootArea, template2Cols };
 }

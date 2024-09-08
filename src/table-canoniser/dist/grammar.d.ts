@@ -374,8 +374,8 @@ interface ContextTransform {
  *     - `valueCstr`: The value constraint, default is `TableCanoniserKeyWords.String`
  *     - `ignoreOutOfBounds`: Determines whether to ignore the constraint when the specified cell exceeds the table boundaries, default is true
  *   - `traverse`: The traversal direction for the selected area
- *     - `xDirection`: The x-axis traversal direction; 'after' means traversing after the startCell; 'before' means traversing before the startCell; 'whole' means traversing the entire area; default is null, meaning no traversal
- *     - `yDirection`: The y-axis traversal direction; 'after' means traversing after the startCell; 'before' means traversing before the startCell; 'whole' means traversing the entire area; default is null, meaning no traversal
+ *     - `xDirection`: The x-axis traversal direction; 'after' means traversing after the startCell; 'before' means traversing before the startCell; 'beforeAndAfter' means traversing the entire area; default is null, meaning no traversal
+ *     - `yDirection`: The y-axis traversal direction; 'after' means traversing after the startCell; 'before' means traversing before the startCell; 'beforeAndAfter' means traversing the entire area; default is null, meaning no traversal
  * - `extract`: The extraction rules for transforming the selected area
  *   - `byContext`: The context-based transformation for the selected area
  *     - `position`: Defines the location of the context cell relative to the current cell, default is 'above'
@@ -430,13 +430,13 @@ interface TableCanoniserTemplate {
          */
         traverse?: {
             /**
-             * The x-axis traversal direction; 'after' means traversing after the startCell; 'before' means traversing before the startCell; 'whole' means traversing the entire area; default is null, meaning no traversal
+             * The x-axis traversal direction; 'after' means traversing after the startCell; 'before' means traversing before the startCell; 'beforeAndAfter' means traversing the entire area; default is null, meaning no traversal
              */
-            xDirection?: null | "after" | "before" | "whole";
+            xDirection?: null | "after" | "before" | 'beforeAndAfter';
             /**
-             * The y-axis traversal direction; 'after' means traversing after the startCell; 'before' means traversing before the startCell; 'whole' means traversing the entire area; default is null, meaning no traversal
+             * The y-axis traversal direction; 'after' means traversing after the startCell; 'before' means traversing before the startCell; 'beforeAndAfter' means traversing the entire area; default is null, meaning no traversal
              */
-            yDirection?: null | "after" | "before" | "whole";
+            yDirection?: null | "after" | "before" | 'beforeAndAfter';
         };
     };
     /**

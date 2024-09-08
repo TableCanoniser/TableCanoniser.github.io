@@ -3,10 +3,9 @@ import Handsontable from "handsontable";
 import * as d3 from 'd3';
 import { shallowRef } from 'vue';
 
-import { Table2D, TableCanoniserTemplate, TableCanoniserKeyWords, CellInfo, CellValueType, AreaInfo, completeCellConstraint } from "@/table-canoniser/dist/grammar"
+import { Table2D, TableCanoniserTemplate, TableCanoniserKeyWords, CellInfo, CellValueType, AreaInfo, completeCellConstraint, CustomError } from "@/table-canoniser/dist/grammar"
 import { transformTable, serialize, getCellBySelect } from "@/table-canoniser/dist/parser"
 import { TreeChart, NodeData } from '@/utils/drawTree';
-import { CustomError } from "@/types";
 
 import { message } from 'ant-design-vue';
 

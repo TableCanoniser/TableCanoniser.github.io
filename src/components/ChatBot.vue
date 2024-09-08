@@ -77,8 +77,14 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { dataManager, getAnswer } from '@/api';
-import { ChatMessage } from '@/types';
+// import { dataManager, getAnswer } from '@/api';
+// import { ChatMessage } from '@/types';
+
+interface ChatMessage {
+    role: string
+    content: string
+}
+
 
 const uploadflag = ref(true);
 const uploadShow = ref(true);
@@ -126,12 +132,12 @@ const uploadanimated = () => {
 
 function sendMessage() {
 
-    getAnswer(chatText.value).then((res) => {
-        chatList.value.push({
-            role: 'gpt',
-            content: res.data.answer,
-        })
-    })
+    // getAnswer(chatText.value).then((res) => {
+    //     chatList.value.push({
+    //         role: 'gpt',
+    //         content: res.data.answer,
+    //     })
+    // })
 
     const chatMessage: ChatMessage = {
         role: 'user',
@@ -151,9 +157,9 @@ function sendMessage() {
 
 function clearHistory() {
     chatList.value = [];
-    dataManager("clear").then((res) => {
-        console.log(res.data);
-    })
+    // dataManager("clear").then((res) => {
+    //     console.log(res.data);
+    // })
 }
 
 function openConfig() {
@@ -174,18 +180,18 @@ function hideConfig() {
 }
 
 function setConfig() {
-    dataManager("role", configRole.value).then((res) => {
-        console.log(res.data);
-    })
+    // dataManager("role", configRole.value).then((res) => {
+    //     console.log(res.data);
+    // })
     configFlag.value = false;
 }
 
 onMounted(() => {
     uploadanimated();
     chatContentDiv = document.querySelector('.chatbot-content');
-    dataManager("role").then((res) => {
-        configRole.value = res.data.role;
-    });
+    // dataManager("role").then((res) => {
+    //     configRole.value = res.data.role;
+    // });
 
     // document.addEventListener('click', (event) => {
     //     const target = event.target as HTMLElement;
