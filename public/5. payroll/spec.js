@@ -6,6 +6,111 @@ const option: TableCanoniserTemplate[] = [
         offsetY: 0,
       },
       size: {
+        width: 12, // "toParentX",
+        height: null,
+      },
+      traverse: {
+        yDirection: "after",
+      },
+      constraints: [
+        {
+          offsetX: 5,
+          offsetY: 0,
+          valueCstr: "Employee Previous Earnings",
+        },
+        {
+          offsetFrom: "bottomLeft",
+          valueCstr: "ACME Payroll (Registered to AMALGAMATED CO. PTY. LTD.)",
+        },
+      ],
+    },
+    fill: TableCanoniserKeyWords.Forward,
+    children: [
+      {
+        match: {
+          startCell: {
+            offsetX: 0,
+            offsetY: 4,
+          },
+          size: {
+            width: 2,
+            height: 1,
+          },
+        },
+        extract: {
+          byPositionToTargetCols: ["Employee ID", "Employee Name"],
+        },
+      },
+      {
+        match: {
+          startCell: {
+            offsetX: 0,
+            offsetY: 8,
+          },
+          size: {
+            width: 12,
+            height: null,
+          },
+          traverse: {
+            yDirection: "after",
+          },
+          constraints: [
+            {
+              offsetFrom: "bottomLeft",
+              offsetY: 1,
+              valueCstr: TableCanoniserKeyWords.NotNone,
+            },
+            {
+              offsetFrom: "bottomRight",
+              valueCstr: TableCanoniserKeyWords.Number,
+            },
+          ],
+        },
+        children: [
+          {
+            match: {
+              startCell: {
+                offsetX: 0,
+                offsetY: 0,
+              },
+              size: {
+                width: 1,
+                height: 1,
+              },
+            },
+            extract: {
+              byPositionToTargetCols: ["Period End Date"],
+            },
+          },
+          {
+            match: {
+              startCell: {
+                offsetX: 10,
+                offsetY: 1,
+              },
+              size: {
+                width: 2,
+                height: 1,
+              },
+            },
+            extract: {
+              byPositionToTargetCols: ["Normal Hours", "Amount"],
+            },
+          },
+        ],
+      },
+    ],
+  },
+];
+
+const option2: TableCanoniserTemplate[] = [
+  {
+    match: {
+      startCell: {
+        offsetX: 0,
+        offsetY: 0,
+      },
+      size: {
         width: 12, //"toParentX",
         height: null,
       },
@@ -39,7 +144,7 @@ const option: TableCanoniserTemplate[] = [
           },
         },
         extract: {
-          byPositionToTargetCols: ["EmployeeID", "Employee Name"],
+          byPositionToTargetCols: ["Employee ID", "Employee Name"],
         },
       },
       {
@@ -117,7 +222,7 @@ const option: TableCanoniserTemplate[] = [
   },
 ];
 
-const option2: TableCanoniserTemplate[] = [
+const option3: TableCanoniserTemplate[] = [
   {
     match: {
       startCell: {
@@ -162,7 +267,7 @@ const option2: TableCanoniserTemplate[] = [
           },
         },
         extract: {
-          byPositionToTargetCols: ["EmployeeID", "Employee Name"],
+          byPositionToTargetCols: ["Employee ID", "Employee Name"],
         },
       },
       {
@@ -245,7 +350,7 @@ const option2: TableCanoniserTemplate[] = [
   },
 ];
 
-const option3: TableCanoniserTemplate[] = [
+const option4: TableCanoniserTemplate[] = [
   {
     match: {
       startCell: {
@@ -290,7 +395,7 @@ const option3: TableCanoniserTemplate[] = [
           },
         },
         extract: {
-          byPositionToTargetCols: ["EmployeeID", "Employee Name"],
+          byPositionToTargetCols: ["Employee ID", "Employee Name"],
         },
       },
       {

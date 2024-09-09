@@ -3,21 +3,21 @@
 Employee Previous Earnings,,,,,,,,,,,Page 1 of 553
 Payroll Company,,AMALGAMATED WIDGETS - AMALGAMATED WIDGETS PTY LTD,,,,,,,,,
 001SMITH,John Smith,,,,,,,,,,
-For Pay End Periods between 1/07/1982 and 25/06/1985,,,,,,,,,,,
+For Pay End Periods between 1/07/2012 and 25/06/2015,,,,,,,,,,,
 ,,,,Number of,,,,,,,
 Period End Date,Pay Frequency,,Location,,Description,,,,,Hours,Amount
-6/12/1982,1W01 - Weekly,,CARCOSA,1,,,,,,,
+6/12/2012,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,23,351.87
 ,,,,,Gross Taxable Total,,,,,0,351.87
 ,,,,,Tax (Incl Adjust),,,,,0,0
 ,,,,,Net Pay,,,,,0,351.87
-13/12/1982,1W01 - Weekly,,CARCOSA,1,,,,,,,
+13/12/2012,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,46,703.74
 ,,,,,Gross Taxable Total,,,,,0,703.74
 ,,,,,Tax (Incl Adjust),,,,,0,-80
 ,,,,,Net Pay,,,,,0,623.74
 ,,,,,Superannuation,,,,,0,66.86
-20/12/1982,1W01 - Weekly,,CARCOSA,1,,,,,,,
+20/12/2012,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,37.5,573.7
 ,,,,,Gross Taxable Total,,,,,0,573.7
 ,,,,,Tax (Incl Adjust),,,,,0,-53
@@ -29,22 +29,22 @@ ACME Payroll (Registered to AMALGAMATED CO. PTY. LTD.),,,,,,,,,00:00.7,,
 Employee Previous Earnings,,,,,,,,,,,Page 5 of 553
 Payroll Company,,AMALGAMATED WIDGETS - AMALGAMATED WIDGETS PTY LTD,,,,,,,,,
 002JOHNS,Jane Johnson,,,,,,,,,,
-For Pay End Periods between 1/07/1982 and 25/06/1985,,,,,,,,,,,
+For Pay End Periods between 1/07/2012 and 25/06/2015,,,,,,,,,,,
 ,,,,Number of,,,,,,,
 Period End Date,Pay Frequency,,Location,,Description,,,,,Hours,Amount
-16/04/1985,1W01 - Weekly,,CARCOSA,2,,,,,,,
+16/04/2015,1W01 - Weekly,,CARCOSA,2,,,,,,,
 ,,,,,Normal Hours,,,,,46,1003.22
 ,,,,,Gross Taxable Total,,,,,0,1003.22
 ,,,,,Tax (Incl Adjust),,,,,0,-85
 ,,,,,Net Pay,,,,,0,918.22
 ,,,,,Superannuation,,,,,0,95.3
-23/04/1985,1W01 - Weekly,,CARCOSA,1,,,,,,,
+23/04/2015,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,19.5,425.27
 ,,,,,Gross Taxable Total,,,,,0,425.27
 ,,,,,Tax (Incl Adjust),,,,,0,-14
 ,,,,,Net Pay,,,,,0,411.27
 ,,,,,Superannuation,,,,,0,40.4
-30/04/1985,1W01 - Weekly,,CARCOSA,1,,,,,,,
+30/04/2015,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,30,654.27
 ,,,,,Sat Casual Ldg,,,,,8.5,14.83
 ,,,,,Gross Taxable Total,,,,,0,669.1
@@ -57,22 +57,22 @@ ACME Payroll (Registered to AMALGAMATED CO. PTY. LTD.),,,,,,,,,00:00.7,,
 Employee Previous Earnings,,,,,,,,,,,Page 6 of 553
 Payroll Company,,AMALGAMATED WIDGETS - AMALGAMATED WIDGETS PTY LTD,,,,,,,,,
 003WILLI,Mark Williams,,,,,,,,,,
-For Pay End Periods between 1/07/1982 and 25/06/1985,,,,,,,,,,,
+For Pay End Periods between 1/07/2012 and 25/06/2015,,,,,,,,,,,
 ,,,,Number of,,,,,,,
 Period End Date,Pay Frequency,,Location,,Description,,,,,Hours,Amount
-5/07/1982,1W01 - Weekly,,CARCOSA,1,,,,,,,
+5/07/2012,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,40,792.31
 ,,,,,Gross Taxable Total,,,,,0,792.31
 ,,,,,Tax (Incl Adjust),,,,,0,-110
 ,,,,,Net Pay,,,,,0,682.31
 ,,,,,Superannuation,,,,,0,75.27
-12/07/1982,1W01 - Weekly,,CARCOSA,1,,,,,,,
+12/07/2012,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,40,792.31
 ,,,,,Gross Taxable Total,,,,,0,792.31
 ,,,,,Tax (Incl Adjust),,,,,0,-110
 ,,,,,Net Pay,,,,,0,682.31
 ,,,,,Superannuation,,,,,0,75.27
-19/07/1982,1W01 - Weekly,,CARCOSA,1,,,,,,,
+19/07/2012,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,40,792.31
 ,,,,,Gross Taxable Total,,,,,0,792.31
 ,,,,,Tax (Incl Adjust),,,,,0,-110
@@ -84,17 +84,17 @@ ACME Payroll (Registered to AMALGAMATED CO. PTY. LTD.),,,,,,,,,00:00.7,,
 Employee Previous Earnings,,,,,,,,,,,Page 14 of 553
 Payroll Company,,AMALGAMATED WIDGETS - AMALGAMATED WIDGETS PTY LTD,,,,,,,,,
 004JONES,Mary Jones,,,,,,,,,,
-For Pay End Periods between 1/07/1982 and 25/06/1985,,,,,,,,,,,
+For Pay End Periods between 1/07/2012 and 25/06/2015,,,,,,,,,,,
 ,,,,Number of,,,,,,,
 Period End Date,Pay Frequency,,Location,,Description,,,,,Hours,Amount
-5/07/1982,1W01 - Weekly,,CARCOSA,1,,,,,,,
+5/07/2012,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,28.5,567.73
 ,,,,,60% Sun Perm Ldg,,,,,7.5,89.64
 ,,,,,Gross Taxable Total,,,,,0,657.37
 ,,,,,Tax (Incl Adjust),,,,,0,-71
 ,,,,,Net Pay,,,,,0,586.37
 ,,,,,Superannuation,,,,,0,62.45
-12/07/1982,1W01 - Weekly,,CARCOSA,1,,,,,,,
+12/07/2012,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,29,591.55
 ,,,,,60% Sun Perm Ldg,,,,,7.5,91.79
 ,,,,,Gross Taxable Total,,,,,0,683.34
@@ -102,7 +102,7 @@ Period End Date,Pay Frequency,,Location,,Description,,,,,Hours,Amount
 ,,,,,Reimburse expenses,,,,,0,50
 ,,,,,Net Pay,,,,,0,657.34
 ,,,,,Superannuation,,,,,0,64.92
-19/07/1982,1W01 - Weekly,,CARCOSA,1,,,,,,,
+19/07/2012,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,21,428.36
 ,,,,,Sick Leave,,,,,7.5,152.99
 ,,,,,Gross Taxable Total,,,,,0,581.35
@@ -115,27 +115,27 @@ ACME Payroll (Registered to AMALGAMATED CO. PTY. LTD.),,,,,,,,,00:00.7,,
 Employee Previous Earnings,,,,,,,,,,,Page 39 of 553
 Payroll Company,,AMALGAMATED WIDGETS - AMALGAMATED WIDGETS PTY LTD,,,,,,,,,
 005LEE,Paul Lee,,,,,,,,,,
-For Pay End Periods between 1/07/1982 and 25/06/1985,,,,,,,,,,,
+For Pay End Periods between 1/07/2012 and 25/06/2015,,,,,,,,,,,
 ,,,,Number of,,,,,,,
 Period End Date,Pay Frequency,,Location,,Description,,,,,Hours,Amount
-8/11/1982,1W01 - Weekly,,CARCOSA,1,,,,,,,
+8/11/2012,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,16,407.97
 ,,,,,Gross Taxable Total,,,,,0,407.97
 ,,,,,Tax (Incl Adjust),,,,,0,-10
 ,,,,,Net Pay,,,,,0,397.97
-15/11/1982,1W01 - Weekly,,CARCOSA,1,,,,,,,
+15/11/2012,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,8,203.98
 ,,,,,Gross Taxable Total,,,,,0,203.98
 ,,,,,Tax (Incl Adjust),,,,,0,0
 ,,,,,Net Pay,,,,,0,203.98
 ,,,,,Superannuation,,,,,0,58.14
-22/11/1982,1W01 - Weekly,,CARCOSA,1,,,,,,,
+22/11/2012,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,8.5,216.73
 ,,,,,Gross Taxable Total,,,,,0,216.73
 ,,,,,Tax (Incl Adjust),,,,,0,0
 ,,,,,Net Pay,,,,,0,216.73
 ,,,,,Superannuation,,,,,0,20.59
-10/01/1983,1W01 - Weekly,,CARCOSA,1,,,,,,,
+10/01/2013,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Gross Taxable Total,,,,,0,0
 ,,,,,Tax (Incl Adjust),,,,,0,0
 ,,,,,Net Pay,,,,,0,0
@@ -145,17 +145,17 @@ ACME Payroll (Registered to AMALGAMATED CO. PTY. LTD.),,,,,,,,,00:00.7,,
 Employee Previous Earnings,,,,,,,,,,,Page 40 of 553
 Payroll Company,,AMALGAMATED WIDGETS - AMALGAMATED WIDGETS PTY LTD,,,,,,,,,
 006GARCI,Lucy Garcia,,,,,,,,,,
-For Pay End Periods between 1/07/1982 and 25/06/1985,,,,,,,,,,,
+For Pay End Periods between 1/07/2012 and 25/06/2015,,,,,,,,,,,
 ,,,,Number of,,,,,,,
 Period End Date,Pay Frequency,,Location,,Description,,,,,Hours,Amount
-5/07/1982,1W01 - Weekly,,CARCOSA,1,,,,,,,
+5/07/2012,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,38,771.42
 ,,,,,Long Service Leave,,,,,76,1542.84
 ,,,,,Gross Taxable Total,,,,,0,2314.26
 ,,,,,Tax (Incl Adjust),,,,,0,-623
 ,,,,,Net Pay,,,,,0,1691.26
 ,,,,,Superannuation,,,,,0,219.85
-12/07/1982,1W01 - Weekly,,CARCOSA,1,,,,,,,
+12/07/2012,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,18,374.18
 ,,,,,Annual Leave,,,,,20,415.75
 ,,,,,Leave Loading 17.5%,,,,,0,72.76
@@ -169,23 +169,23 @@ ACME Payroll (Registered to AMALGAMATED CO. PTY. LTD.),,,,,,,,,00:00.7,,
 Employee Previous Earnings,,,,,,,,,,,Page 44 of 553
 Payroll Company,,AMALGAMATED WIDGETS - AMALGAMATED WIDGETS PTY LTD,,,,,,,,,
 007MILLE,Ryan Miller,,,,,,,,,,
-For Pay End Periods between 1/07/1982 and 25/06/1985,,,,,,,,,,,
+For Pay End Periods between 1/07/2012 and 25/06/2015,,,,,,,,,,,
 ,,,,Number of,,,,,,,
 Period End Date,Pay Frequency,,Location,,Description,,,,,Hours,Amount
-5/12/1983,1W01 - Weekly,,CARCOSA,2,,,,,,,
+5/12/2013,1W01 - Weekly,,CARCOSA,2,,,,,,,
 ,,,,,Normal Hours,,,,,58,1222.14
 ,,,,,60% Sun Perm Ldg,,,,,7.5,94.82
 ,,,,,Gross Taxable Total,,,,,0,1316.96
 ,,,,,Tax (Incl Adjust),,,,,0,-142
 ,,,,,Net Pay,,,,,0,1174.96
 ,,,,,Superannuation,,,,,0,125.11
-12/12/1983,1W01 - Weekly,,CARCOSA,1,,,,,,,
+12/12/2013,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,43,906.07
 ,,,,,Gross Taxable Total,,,,,0,906.07
 ,,,,,Tax (Incl Adjust),,,,,0,-150
 ,,,,,Net Pay,,,,,0,756.07
 ,,,,,Superannuation,,,,,0,86.08
-19/12/1983,1W01 - Weekly,,CARCOSA,1,,,,,,,
+19/12/2013,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,40.5,853.4
 ,,,,,Gross Taxable Total,,,,,0,853.4
 ,,,,,Tax (Incl Adjust),,,,,0,-131
@@ -197,10 +197,10 @@ ACME Payroll (Registered to AMALGAMATED CO. PTY. LTD.),,,,,,,,,00:00.7,,
 Employee Previous Earnings,,,,,,,,,,,Page 52 of 553
 Payroll Company,,AMALGAMATED WIDGETS - AMALGAMATED WIDGETS PTY LTD,,,,,,,,,
 008DAVIS,Emma Davis,,,,,,,,,,
-For Pay End Periods between 1/07/1982 and 25/06/1985,,,,,,,,,,,
+For Pay End Periods between 1/07/2012 and 25/06/2015,,,,,,,,,,,
 ,,,,Number of,,,,,,,
 Period End Date,Pay Frequency,,Location,,Description,,,,,Hours,Amount
-5/07/1982,1W01 - Weekly,,CARCOSA,1,,,,,,,
+5/07/2012,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,16,318.72
 ,,,,,Annual Leave,,,,,7.5,149.4
 ,,,,,Leave Loading 17.5%,,,,,0,26.15
@@ -208,7 +208,7 @@ Period End Date,Pay Frequency,,Location,,Description,,,,,Hours,Amount
 ,,,,,Tax (Incl Adjust),,,,,0,-36
 ,,,,,Net Pay,,,,,0,458.27
 ,,,,,Superannuation,,,,,0,44.47
-12/07/1982,1W01 - Weekly,,CARCOSA,1,,,,,,,
+12/07/2012,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,20.5,418.17
 ,,,,,Annual Leave,,,,,7.5,152.99
 ,,,,,Leave Loading 17.5%,,,,,0,26.77
@@ -216,7 +216,7 @@ Period End Date,Pay Frequency,,Location,,Description,,,,,Hours,Amount
 ,,,,,Tax (Incl Adjust),,,,,0,-58
 ,,,,,Net Pay,,,,,0,539.93
 ,,,,,Superannuation,,,,,0,54.26
-19/07/1982,1W01 - Weekly,,CARCOSA,1,,,,,,,
+19/07/2012,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,35,713.94
 ,,,,,Gross Taxable Total,,,,,0,713.94
 ,,,,,Tax (Incl Adjust),,,,,0,-83
@@ -228,25 +228,25 @@ ACME Payroll (Registered to AMALGAMATED CO. PTY. LTD.),,,,,,,,,00:00.7,,
 Employee Previous Earnings,,,,,,,,,,,Page 57 of 553
 Payroll Company,,AMALGAMATED WIDGETS - AMALGAMATED WIDGETS PTY LTD,,,,,,,,,
 009RODRI,Jack Rodriguez,,,,,,,,,,
-For Pay End Periods between 1/07/1982 and 25/06/1985,,,,,,,,,,,
+For Pay End Periods between 1/07/2012 and 25/06/2015,,,,,,,,,,,
 ,,,,Number of,,,,,,,
 Period End Date,Pay Frequency,,Location,,Description,,,,,Hours,Amount
-22/08/1983,1W01 - Weekly,,CARCOSA,2,,,,,,,
+22/08/2013,1W01 - Weekly,,CARCOSA,2,,,,,,,
 ,,,,,Normal Hours,,,,,17,268.66
 ,,,,,Gross Taxable Total,,,,,0,268.66
 ,,,,,Tax (Incl Adjust),,,,,0,0
 ,,,,,Net Pay,,,,,0,268.66
-5/09/1983,1W01 - Weekly,,CARCOSA,2,,,,,,,
+5/09/2013,1W01 - Weekly,,CARCOSA,2,,,,,,,
 ,,,,,Normal Hours,,,,,17,268.66
 ,,,,,Gross Taxable Total,,,,,0,268.66
 ,,,,,Tax (Incl Adjust),,,,,0,0
 ,,,,,Net Pay,,,,,0,268.66
-12/09/1983,1W01 - Weekly,,CARCOSA,1,,,,,,,
+12/09/2013,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,7.5,118.53
 ,,,,,Gross Taxable Total,,,,,0,118.53
 ,,,,,Tax (Incl Adjust),,,,,0,0
 ,,,,,Net Pay,,,,,0,118.53
-19/09/1983,1W01 - Weekly,,CARCOSA,1,,,,,,,
+19/09/2013,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,16,252.86
 ,,,,,Gross Taxable Total,,,,,0,252.86
 ,,,,,Tax (Incl Adjust),,,,,0,0
@@ -257,26 +257,26 @@ ACME Payroll (Registered to AMALGAMATED CO. PTY. LTD.),,,,,,,,,00:00.7,,
 Employee Previous Earnings,,,,,,,,,,,Page 70 of 553
 Payroll Company,,AMALGAMATED WIDGETS - AMALGAMATED WIDGETS PTY LTD,,,,,,,,,
 010MARTI,Lily Martinez,,,,,,,,,,
-For Pay End Periods between 1/07/1982 and 25/06/1985,,,,,,,,,,,
+For Pay End Periods between 1/07/2012 and 25/06/2015,,,,,,,,,,,
 ,,,,Number of,,,,,,,
 Period End Date,Pay Frequency,,Location,,Description,,,,,Hours,Amount
-29/11/1982,1W01 - Weekly,,CARCOSA,1,,,,,,,
+29/11/2012,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,8.5,173.39
 ,,,,,Gross Taxable Total,,,,,0,173.39
 ,,,,,Tax (Incl Adjust),,,,,0,0
 ,,,,,Net Pay,,,,,0,173.39
-6/12/1982,1W01 - Weekly,,CARCOSA,1,,,,,,,
+6/12/2012,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,8.5,173.39
 ,,,,,Gross Taxable Total,,,,,0,173.39
 ,,,,,Tax (Incl Adjust),,,,,0,0
 ,,,,,Net Pay,,,,,0,173.39
-13/12/1982,1W01 - Weekly,,CARCOSA,1,,,,,,,
+13/12/2012,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,25,509.96
 ,,,,,Gross Taxable Total,,,,,0,509.96
 ,,,,,Tax (Incl Adjust),,,,,0,-39
 ,,,,,Net Pay,,,,,0,470.96
 ,,,,,Superannuation,,,,,0,64.92
-20/12/1982,1W01 - Weekly,,CARCOSA,1,,,,,,,
+20/12/2012,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,32,652.75
 ,,,,,60% Sun Perm Ldg,,,,,7.5,91.79
 ,,,,,Gross Taxable Total,,,,,0,744.54
@@ -289,22 +289,22 @@ ACME Payroll (Registered to AMALGAMATED CO. PTY. LTD.),,,,,,,,,00:00.7,,
 Employee Previous Earnings,,,,,,,,,,,Page 91 of 553
 Payroll Company,,AMALGAMATED WIDGETS - AMALGAMATED WIDGETS PTY LTD,,,,,,,,,
 011HERN,Mike Hernandez,,,,,,,,,,
-For Pay End Periods between 1/07/1982 and 25/06/1985,,,,,,,,,,,
+For Pay End Periods between 1/07/2012 and 25/06/2015,,,,,,,,,,,
 ,,,,Number of,,,,,,,
 Period End Date,Pay Frequency,,Location,,Description,,,,,Hours,Amount
-23/08/1982,1W01 - Weekly,,CARCOSA,1,,,,,,,
+23/08/2012,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,32.75,668.04
 ,,,,,Gross Taxable Total,,,,,0,668.04
 ,,,,,Tax (Incl Adjust),,,,,0,-73
 ,,,,,Net Pay,,,,,0,595.04
 ,,,,,Superannuation,,,,,0,63.46
-30/08/1982,1W01 - Weekly,,CARCOSA,1,,,,,,,
+30/08/2012,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,33,673.14
 ,,,,,Gross Taxable Total,,,,,0,673.14
 ,,,,,Tax (Incl Adjust),,,,,0,-74
 ,,,,,Net Pay,,,,,0,599.14
 ,,,,,Superannuation,,,,,0,63.95
-6/09/1982,1W01 - Weekly,,CARCOSA,1,,,,,,,
+6/09/2012,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Sick Leave,,,,,32,652.75
 ,,,,,Gross Taxable Total,,,,,0,652.75
 ,,,,,Tax (Incl Adjust),,,,,0,-70
@@ -316,15 +316,15 @@ ACME Payroll (Registered to AMALGAMATED CO. PTY. LTD.),,,,,,,,,00:00.7,,
 Employee Previous Earnings,,,,,,,,,,,Page 111 of 553
 Payroll Company,,AMALGAMATED WIDGETS - AMALGAMATED WIDGETS PTY LTD,,,,,,,,,
 012LOPEZ,Kate Lopez,,,,,,,,,,
-For Pay End Periods between 1/07/1982 and 25/06/1985,,,,,,,,,,,
+For Pay End Periods between 1/07/2012 and 25/06/2015,,,,,,,,,,,
 ,,,,Number of,,,,,,,
 Period End Date,Pay Frequency,,Location,,Description,,,,,Hours,Amount
-20/12/1982,1W01 - Weekly,,CARCOSA,1,,,,,,,
+20/12/2012,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,38.5,441.75
 ,,,,,Gross Taxable Total,,,,,0,441.75
 ,,,,,Tax (Incl Adjust),,,,,0,-20
 ,,,,,Net Pay,,,,,0,421.75
-27/12/1982,1W01 - Weekly,,CARCOSA,1,,,,,,,
+27/12/2012,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,37.5,430.28
 ,,,,,Public Holiday - worked,,,,,7.5,215.14
 ,,,,,Gross Taxable Total,,,,,0,645.42
@@ -338,23 +338,23 @@ ACME Payroll (Registered to AMALGAMATED CO. PTY. LTD.),,,,,,,,,00:00.7,,
 Employee Previous Earnings,,,,,,,,,,,Page 129 of 553
 Payroll Company,,AMALGAMATED WIDGETS - AMALGAMATED WIDGETS PTY LTD,,,,,,,,,
 013GONZA,Adam Gonzalez,,,,,,,,,,
-For Pay End Periods between 1/07/1982 and 25/06/1985,,,,,,,,,,,
+For Pay End Periods between 1/07/2012 and 25/06/2015,,,,,,,,,,,
 ,,,,Number of,,,,,,,
 Period End Date,Pay Frequency,,Location,,Description,,,,,Hours,Amount
-5/07/1982,1W01 - Weekly,,CARCOSA,1,,,,,,,
+5/07/2012,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,30,604.82
 ,,,,,Other Leave - Bereavement,,,,,8,161.28
 ,,,,,Gross Taxable Total,,,,,0,766.1
 ,,,,,Tax (Incl Adjust),,,,,0,-101
 ,,,,,Net Pay,,,,,0,665.1
 ,,,,,Superannuation,,,,,0,57.46
-12/07/1982,1W01 - Weekly,,CARCOSA,1,,,,,,,
+12/07/2012,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,42,867.06
 ,,,,,Gross Taxable Total,,,,,0,867.06
 ,,,,,Tax (Incl Adjust),,,,,0,-136
 ,,,,,Net Pay,,,,,0,731.06
 ,,,,,Superannuation,,,,,0,82.37
-19/07/1982,1W01 - Weekly,,CARCOSA,1,,,,,,,
+19/07/2012,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,26,536.75
 ,,,,,Annual Leave,,,,,14,289.02
 ,,,,,Leave Loading 17.5%,,,,,0,50.58
@@ -368,21 +368,21 @@ ACME Payroll (Registered to AMALGAMATED CO. PTY. LTD.),,,,,,,,,00:00.7,,
 Employee Previous Earnings,,,,,,,,,,,Page 151 of 553
 Payroll Company,,AMALGAMATED WIDGETS - AMALGAMATED WIDGETS PTY LTD,,,,,,,,,
 014WILSO,Anne Wilson,,,,,,,,,,
-For Pay End Periods between 1/07/1982 and 25/06/1985,,,,,,,,,,,
+For Pay End Periods between 1/07/2012 and 25/06/2015,,,,,,,,,,,
 ,,,,Number of,,,,,,,
 Period End Date,Pay Frequency,,Location,,Description,,,,,Hours,Amount
-26/07/1982,1W01 - Weekly,,CARCOSA,1,,,,,,,
+26/07/2012,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,15,305.97
 ,,,,,Gross Taxable Total,,,,,0,305.97
 ,,,,,Tax (Incl Adjust),,,,,0,0
 ,,,,,Net Pay,,,,,0,305.97
-2/08/1982,1W01 - Weekly,,CARCOSA,1,,,,,,,
+2/08/2012,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,30,611.95
 ,,,,,Gross Taxable Total,,,,,0,611.95
 ,,,,,Tax (Incl Adjust),,,,,0,-61
 ,,,,,Net Pay,,,,,0,550.95
 ,,,,,Superannuation,,,,,0,58.14
-9/08/1982,1W01 - Weekly,,CARCOSA,1,,,,,,,
+9/08/2012,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,37.5,764.94
 ,,,,,Gross Taxable Total,,,,,0,764.94
 ,,,,,Tax (Incl Adjust),,,,,0,-101
@@ -394,22 +394,22 @@ ACME Payroll (Registered to AMALGAMATED CO. PTY. LTD.),,,,,,,,,00:00.7,,
 Employee Previous Earnings,,,,,,,,,,,Page 179 of 553
 Payroll Company,,AMALGAMATED WIDGETS - AMALGAMATED WIDGETS PTY LTD,,,,,,,,,
 015ANDE,Eric Anderson,,,,,,,,,,
-For Pay End Periods between 1/07/1982 and 25/06/1985,,,,,,,,,,,
+For Pay End Periods between 1/07/2012 and 25/06/2015,,,,,,,,,,,
 ,,,,Number of,,,,,,,
 Period End Date,Pay Frequency,,Location,,Description,,,,,Hours,Amount
-14/02/1983,1W01 - Weekly,,CARCOSA,1,,,,,,,
+14/02/2013,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,7.5,152.99
 ,,,,,Gross Taxable Total,,,,,0,152.99
 ,,,,,Tax (Incl Adjust),,,,,0,0
 ,,,,,Net Pay,,,,,0,152.99
-21/02/1983,1W01 - Weekly,,CARCOSA,1,,,,,,,
+21/02/2013,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,37,754.74
 ,,,,,60% Sun Perm Ldg,,,,,7,85.67
 ,,,,,Gross Taxable Total,,,,,0,840.41
 ,,,,,Tax (Incl Adjust),,,,,0,-127
 ,,,,,Net Pay,,,,,0,713.41
 ,,,,,Superannuation,,,,,0,94.37
-28/02/1983,1W01 - Weekly,,CARCOSA,1,,,,,,,
+28/02/2013,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,31.25,637.45
 ,,,,,60% Sun Perm Ldg,,,,,6.5,79.55
 ,,,,,Gross Taxable Total,,,,,0,717
@@ -422,23 +422,23 @@ ACME Payroll (Registered to AMALGAMATED CO. PTY. LTD.),,,,,,,,,00:00.7,,
 Employee Previous Earnings,,,,,,,,,,,Page 194 of 553
 Payroll Company,,AMALGAMATED WIDGETS - AMALGAMATED WIDGETS PTY LTD,,,,,,,,,
 016THOM,Amy Thomas,,,,,,,,,,
-For Pay End Periods between 1/07/1982 and 25/06/1985,,,,,,,,,,,
+For Pay End Periods between 1/07/2012 and 25/06/2015,,,,,,,,,,,
 ,,,,Number of,,,,,,,
 Period End Date,Pay Frequency,,Location,,Description,,,,,Hours,Amount
-5/07/1982,1W01 - Weekly,,CARCOSA,1,,,,,,,
+5/07/2012,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,14.5,252.74
 ,,,,,Sun Cas Ldg,,,,,7.5,91.51
 ,,,,,Gross Taxable Total,,,,,0,344.25
 ,,,,,Tax (Incl Adjust),,,,,0,0
 ,,,,,Net Pay,,,,,0,344.25
-12/07/1982,1W01 - Weekly,,CARCOSA,1,,,,,,,
+12/07/2012,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,14,249.88
 ,,,,,Sun Cas Ldg,,,,,7,87.46
 ,,,,,Gross Taxable Total,,,,,0,337.34
 ,,,,,Tax (Incl Adjust),,,,,0,-166
 ,,,,,Net Pay,,,,,0,171.34
 ,,,,,Superannuation,,,,,0,64.75
-19/07/1982,1W01 - Weekly,,CARCOSA,1,,,,,,,
+19/07/2012,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,22,392.67
 ,,,,,Sun Cas Ldg,,,,,7.5,93.7
 ,,,,,Gross Taxable Total,,,,,0,486.37
@@ -451,22 +451,22 @@ ACME Payroll (Registered to AMALGAMATED CO. PTY. LTD.),,,,,,,,,00:00.7,,
 Employee Previous Earnings,,,,,,,,,,,Page 199 of 553
 Payroll Company,,AMALGAMATED WIDGETS - AMALGAMATED WIDGETS PTY LTD,,,,,,,,,
 017TAYLO,Ben Taylor,,,,,,,,,,
-For Pay End Periods between 1/07/1982 and 25/06/1985,,,,,,,,,,,
+For Pay End Periods between 1/07/2012 and 25/06/2015,,,,,,,,,,,
 ,,,,Number of,,,,,,,
 Period End Date,Pay Frequency,,Location,,Description,,,,,Hours,Amount
-27/02/1984,1W01 - Weekly,,CARCOSA,1,,,,,,,
+27/02/2014,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,9.5,200.18
 ,,,,,Gross Taxable Total,,,,,0,200.18
 ,,,,,Tax (Incl Adjust),,,,,0,0
 ,,,,,Net Pay,,,,,0,200.18
-6/03/1984,1W01 - Weekly,,CARCOSA,1,,,,,,,
+6/03/2014,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,20.5,431.96
 ,,,,,60% Sun Perm Ldg,,,,,7.5,94.82
 ,,,,,Gross Taxable Total,,,,,0,526.78
 ,,,,,Tax (Incl Adjust),,,,,0,-43
 ,,,,,Net Pay,,,,,0,483.78
 ,,,,,Superannuation,,,,,0,50.04
-13/03/1984,1W01 - Weekly,,CARCOSA,1,,,,,,,
+13/03/2014,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,30,632.14
 ,,,,,60% Sun Perm Ldg,,,,,7.5,94.82
 ,,,,,Public Holiday - worked,,,,,4,189.64
@@ -474,7 +474,7 @@ Period End Date,Pay Frequency,,Location,,Description,,,,,Hours,Amount
 ,,,,,Tax (Incl Adjust),,,,,0,-153
 ,,,,,Net Pay,,,,,0,763.6
 ,,,,,Superannuation,,,,,0,87.08
-20/03/1984,1W01 - Weekly,,CARCOSA,1,,,,,,,
+20/03/2014,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,21.5,453.04
 ,,,,,Gross Taxable Total,,,,,0,453.04
 ,,,,,Tax (Incl Adjust),,,,,0,-23
@@ -486,10 +486,10 @@ ACME Payroll (Registered to AMALGAMATED CO. PTY. LTD.),,,,,,,,,00:00.7,,
 Employee Previous Earnings,,,,,,,,,,,Page 206 of 553
 Payroll Company,,AMALGAMATED WIDGETS - AMALGAMATED WIDGETS PTY LTD,,,,,,,,,
 018MOORE,Eva Moore,,,,,,,,,,
-For Pay End Periods between 1/07/1982 and 25/06/1985,,,,,,,,,,,
+For Pay End Periods between 1/07/2012 and 25/06/2015,,,,,,,,,,,
 ,,,,Number of,,,,,,,
 Period End Date,Pay Frequency,,Location,,Description,,,,,Hours,Amount
-5/07/1982,1W01 - Weekly,,CARCOSA,1,,,,,,,
+5/07/2012,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,20,398.4
 ,,,,,Sick Leave,,,,,6,119.52
 ,,,,,Term AL Gross,,,,,89.04,1773.69
@@ -504,26 +504,26 @@ ACME Payroll (Registered to AMALGAMATED CO. PTY. LTD.),,,,,,,,,00:00.7,,
 Employee Previous Earnings,,,,,,,,,,,Page 207 of 553
 Payroll Company,,AMALGAMATED WIDGETS - AMALGAMATED WIDGETS PTY LTD,,,,,,,,,
 019JACKS,Ian Jackson,,,,,,,,,,
-For Pay End Periods between 1/07/1982 and 25/06/1985,,,,,,,,,,,
+For Pay End Periods between 1/07/2012 and 25/06/2015,,,,,,,,,,,
 ,,,,Number of,,,,,,,
 Period End Date,Pay Frequency,,Location,,Description,,,,,Hours,Amount
-15/05/1984,1W01 - Weekly,,CARCOSA,1,,,,,,,
+15/05/2014,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,4,105.36
 ,,,,,Gross Taxable Total,,,,,0,105.36
 ,,,,,Tax (Incl Adjust),,,,,0,0
 ,,,,,Net Pay,,,,,0,105.36
-22/05/1984,1W01 - Weekly,,CARCOSA,1,,,,,,,
+22/05/2014,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,4.5,118.53
 ,,,,,Gross Taxable Total,,,,,0,118.53
 ,,,,,Tax (Incl Adjust),,,,,0,0
 ,,,,,Net Pay,,,,,0,118.53
-5/06/1984,1W01 - Weekly,,CARCOSA,1,,,,,,,
+5/06/2014,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,8.5,223.88
 ,,,,,Gross Taxable Total,,,,,0,223.88
 ,,,,,Tax (Incl Adjust),,,,,0,0
 ,,,,,Uniforms - Reducing Balance,,,,,0,-10
 ,,,,,Net Pay,,,,,0,213.88
-12/06/1984,1W01 - Weekly,,CARCOSA,1,,,,,,,
+12/06/2014,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,5.5,144.87
 ,,,,,Sun Cas Ldg,,,,,5.5,101.41
 ,,,,,Gross Taxable Total,,,,,0,246.28
@@ -537,20 +537,20 @@ ACME Payroll (Registered to AMALGAMATED CO. PTY. LTD.),,,,,,,,,00:00.7,,
 Employee Previous Earnings,,,,,,,,,,,Page 216 of 553
 Payroll Company,,AMALGAMATED WIDGETS - AMALGAMATED WIDGETS PTY LTD,,,,,,,,,
 020MARTI,Zoe Martin,,,,,,,,,,
-For Pay End Periods between 1/07/1982 and 25/06/1985,,,,,,,,,,,
+For Pay End Periods between 1/07/2012 and 25/06/2015,,,,,,,,,,,
 ,,,,Number of,,,,,,,
 Period End Date,Pay Frequency,,Location,,Description,,,,,Hours,Amount
-12/12/1983,1W01 - Weekly,,CARCOSA,2,,,,,,,
+12/12/2013,1W01 - Weekly,,CARCOSA,2,,,,,,,
 ,,,,,Normal Hours,,,,,33,391.14
 ,,,,,Gross Taxable Total,,,,,0,391.14
 ,,,,,Tax (Incl Adjust),,,,,0,0
 ,,,,,Net Pay,,,,,0,391.14
-19/12/1983,1W01 - Weekly,,CARCOSA,1,,,,,,,
+19/12/2013,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,18,213.35
 ,,,,,Gross Taxable Total,,,,,0,213.35
 ,,,,,Tax (Incl Adjust),,,,,0,0
 ,,,,,Net Pay,,,,,0,213.35
-26/12/1983,1W01 - Weekly,,CARCOSA,1,,,,,,,
+26/12/2013,1W01 - Weekly,,CARCOSA,1,,,,,,,
 ,,,,,Normal Hours,,,,,15,177.79
 ,,,,,Gross Taxable Total,,,,,0,177.79
 ,,,,,Tax (Incl Adjust),,,,,0,0
