@@ -160,7 +160,10 @@ const closeContextMenu = (e: any) => {
             // Target Cols - No Extract Logic
             tableStore.insertNodeOrPropertyIntoSpecs(undefined, "extract")
             break;
-        case "3":
+        case "3-0":
+        case "3-1":
+        case "3-2":
+        case "3-3":
             // Add Sub-Template Logic
             messageInfo = "Please select an area in the input table." + messageInfo;
             triggerCellCursorFlag = true;
@@ -289,10 +292,10 @@ function handleCodeChange(clickFlag = false) {
         drawMinimap(tableStore.input_tbl.tbl.length, tableStore.input_tbl.tbl[0].length, tblContainer.value, tableStore);
     }
     tableStore.transformTablebyCode();  // auto run
-    if (tableStore.editor.mappingSpec.highlightCode) {
+    if (tableStore.editor.mappingSpec.triggerCodeChange && tableStore.editor.mappingSpec.highlightCode) {
         // console.log('handleCodeChange-highlightCode', tableStore.editor.mappingSpec.highlightCode);
         tableStore.highlightCode(...tableStore.editor.mappingSpec.highlightCode);
-        // tableStore.editor.mappingSpec.highlightCode = null;
+        tableStore.editor.mappingSpec.highlightCode = null;
     }
     setTimeout(() => {
         tableStore.editor.mappingSpec.triggerCodeChange = true;
@@ -322,11 +325,13 @@ function handleCodeChange(clickFlag = false) {
 defineExpose({ handleCodeChange });
 
 watch(() => tableStore.editor.mappingSpec.code, (newVal) => {
+    // console.log('watch code changed start');
     if (tableStore.editor.mappingSpec.triggerCodeChange) {
         handleCodeChange()
     } else if (tableStore.editor.mappingSpec.highlightCode) {
         tableStore.editor.mappingSpec.instance?.setValue(newVal);
         tableStore.highlightCode(...tableStore.editor.mappingSpec.highlightCode);
+        tableStore.editor.mappingSpec.highlightCode = null;
         tableStore.editor.mappingSpec.triggerCodeChange = true;
     }
 });

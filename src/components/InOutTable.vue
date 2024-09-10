@@ -348,23 +348,60 @@ function initEventsForTbl(tbl: "input_tbl" | "output_tbl") {
           tableStore.tree.instanceIndex = 0;
           tableStore.updateVisTreeAreaBox();
           const selectType = tableStore.spec.selectAreaFromNode;
-          const visNode = selectType === "0" ? tableStore.spec.selectNode!.parent!.data : tableStore.spec.selectNode!.data;
+          const visNode = tableStore.spec.selectNode!.data;
           const nx = visNode.x, ny = visNode.y, nw = visNode.width, nh = visNode.height;
           const [startRow, startCol, endRow, endCol] = selected[0];
           const offsetX = startCol - nx, offsetY = startRow - ny;
-          let match: TableCanoniserTemplate["match"] = {};
-          switch (selectType) {
-            case "0":
-            // Reset Area Logic
-            case "3":
-              // Add Sub-Template Logic
-              const width = endCol - startCol + 1;
-              const height = endRow - startRow + 1;
-              const traverse = {
-                xDirection: nw >= 2 * width ? 'after' as const : undefined,
-                yDirection: nh >= 2 * height ? 'after' as const : undefined
-              }
-              match = {
+          if (selectType.startsWith("3")) {
+            // Add Sub-Template Logic
+            const width = endCol - startCol + 1;
+            const height = endRow - startRow + 1;
+            const traverse = (visNode.children && visNode.children.length > 0) ? {} : {
+              xDirection: nw >= 2 * width ? 'after' as const : undefined,
+              yDirection: nh >= 2 * height ? 'after' as const : undefined
+            }
+            let extract: any = null, extractColor: string = '';
+            const maxCNum = tableStore.findMaxCNumber() + 1;
+
+            switch (selectType) {
+              case "3-0":
+                // Target Cols - Position Based Logic
+                extract = {
+                  byPositionToTargetCols: Array.from({ length: width * height }, (_, i) => `C${maxCNum + i}`)
+                }
+                extractColor = 'positionShallow';
+                break;
+              case "3-1":
+                // Target Cols - Context Based Logic
+                extract = {
+                  byContext: {
+                    position: 'above'
+                  }
+                }
+                extractColor = 'contextShallow';
+                break;
+              case "3-2":
+                // Target Cols - Value Based Logic
+                const createExtract = () => {
+                  return eval(`currentAreaTbl => {
+                  // Please replace the default code with the necessary implementation to complete the function.
+                  return currentAreaTbl.flat().map((cell, i) => 'C' + (${maxCNum} + i))
+                  }`)
+                }
+                extract = {
+                  byValue: createExtract()
+                }
+                extractColor = 'valueShallow';
+                break;
+              case "3-3":
+                // Target Cols - No Extract Logic
+                extract = undefined
+                extractColor = 'nullShallow';
+                break;
+            }
+
+            const childPattern: TableCanoniserTemplate = {
+              match: {
                 startCell: {
                   // offsetLayer: "current",
                   // offsetFrom: "topLeft",
@@ -373,66 +410,28 @@ function initEventsForTbl(tbl: "input_tbl" | "output_tbl") {
                 },
                 size: { width, height },
                 traverse
-              }
-              if (selectType === "0") {
-                tableStore.insertNodeOrPropertyIntoSpecs(match, "match");
-                const currentSpec = tableStore.getNodebyPath(tableStore.spec.rawSpecs, tableStore.spec.selectNode!.data.path!) as TableCanoniserTemplate;
-                tableStore.editor.mappingSpec.highlightCode = [...tableStore.getHighlightCodeStartEndLine(currentSpec.match, currentSpec), `${tableStore.spec.selectNode!.data.type}Shallow`];
-              } else {
-                tableStore.insertNodeOrPropertyIntoSpecs(match, "children");
-                tableStore.editor.mappingSpec.highlightCode = [...tableStore.getHighlightCodeStartEndLine({ match: match }), 'nullShallow'];
-              }
-              break;
-            case "1":
-              // Add Constraints Logic
-              const cellValue = inHotInst.getDataAtCell(startRow, startCol);
-              match = {
-                constraints: [{
-                  offsetX: offsetX,
-                  offsetY: offsetY,
-                  valueCstr: tableStore.getCellDataType(cellValue) // TableCanoniserKeyWords.String,
-                }]
-              }
-              const constraint = match.constraints![0]
-              tableStore.insertNodeOrPropertyIntoSpecs(constraint, "constraints");
-              tableStore.editor.mappingSpec.highlightCode = [...tableStore.getHighlightCodeStartEndLine(constraint, tableStore.getNodebyPath(tableStore.spec.rawSpecs, visNode.path!)), `${visNode.type}Shallow`];
-              break;
+              },
+              extract
+            }
+
+            tableStore.insertNodeOrPropertyIntoSpecs(childPattern, "children");
+            tableStore.editor.mappingSpec.highlightCode = [...tableStore.getHighlightCodeStartEndLine(childPattern), extractColor];
+
+          } else if (selectType === "1") {
+            // Add Constraints Logic
+            const cellValue = inHotInst.getDataAtCell(startRow, startCol);
+            const constraint = {
+              offsetX: offsetX,
+              offsetY: offsetY,
+              valueCstr: tableStore.getCellDataType(cellValue) // TableCanoniserKeyWords.String,
+            }
+            tableStore.insertNodeOrPropertyIntoSpecs(constraint, "constraints");
+            tableStore.editor.mappingSpec.highlightCode = [...tableStore.getHighlightCodeStartEndLine(constraint, tableStore.getNodebyPath(tableStore.spec.rawSpecs, visNode.path!)), 'selectionShallow']; // `${visNode.type}Shallow`
           }
+
           tableStore.spec.selectAreaFromNode = "";
           tableStore.clearStatus("matchArea");
-          /*
-          const areaConfig = tableStore.spec.areaConfig;
-          areaConfig.match!.startCell = {
-            offsetLayer: "root",
-            offsetFrom: "topLeft",
-            offsetX: selected[0][1] < 0 ? 0 : selected[0][1],
-            offsetY: selected[0][0] < 0 ? 0 : selected[0][0]
-          }
-          areaConfig.match!.size = {
-            width: selected[0][3] - selected[0][1] + 1,
-            height: selected[0][2] - selected[0][0] + 1
-          }
-          areaConfig.match!.traverse = {
-            xDirection: "after",
-            yDirection: "after"
-          }
-          const areaFormData = tableStore.spec.areaFormData;
-          areaFormData.offsetLayer = areaConfig.match!.startCell?.offsetLayer;
-          areaFormData.offsetFrom = areaConfig.match!.startCell?.offsetFrom;
-          areaFormData.position = {
-            x: areaConfig.match!.startCell?.offsetX,
-            y: areaConfig.match!.startCell?.offsetY
-          }
-          areaFormData.traverse = {
-            xDirection: areaConfig.match!.traverse?.xDirection,
-            yDirection: areaConfig.match!.traverse?.yDirection
-          }
-          areaFormData.size = {
-            width: areaConfig.match!.size?.width,
-            height: areaConfig.match!.size?.height
-          }
-          tableStore.spec.dragConfigOpen = true;
-          */
+
         } else if (tableStore.spec.selectAreaFromLegend.length) {
           // 说明从legend处选择区域
           inHotInst.updateSettings({ cell: [] });
@@ -453,10 +452,11 @@ function initEventsForTbl(tbl: "input_tbl" | "output_tbl") {
           tableStore.editor.mappingSpec.highlightCode = [...tableStore.getHighlightCodeStartEndLine(newSpec, null, specs), `${selectFromLegend[selectFromLegend.length - 1]}Shallow`];
         }
       }
-
       tableStore.highlightNodes(selected);
     } else {
       tableStore.highlightMinimapCells(cells);
+      const newSelections = cells.map(cell => [cell.row, cell.col, cell.row, cell.col] as Selection)
+      tableStore.highlightNodes(newSelections);
     }
   });
 }

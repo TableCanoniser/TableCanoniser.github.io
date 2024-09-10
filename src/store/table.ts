@@ -4,7 +4,7 @@ import * as d3 from 'd3';
 import { shallowRef } from 'vue';
 
 import { Table2D, TableCanoniserTemplate, TableCanoniserKeyWords, CellInfo, CellValueType, AreaInfo, completeCellConstraint, CustomError } from "@/table-canoniser/dist/grammar"
-import { transformTable, serialize, getCellBySelect } from "@/table-canoniser/dist/parser"
+import { transformTable, serialize, getCellBySelect, getNodebyPath } from "@/table-canoniser/dist/parser"
 import { TreeChart, NodeData } from '@/utils/drawTree';
 
 import { message } from 'ant-design-vue';
@@ -12,8 +12,6 @@ import { message } from 'ant-design-vue';
 import * as monaco from "monaco-editor";
 import * as ts from "typescript";
 import { typeMapColor, TypeColor } from '@/utils/style';
-// import { colorConfig } from '@/tree/style';
-// import { cloneDeep } from 'lodash';
 
 function replaceEvenSpaces(str: string) {
   // 使用正则表达式匹配连续的空格
@@ -135,7 +133,7 @@ export const useTableStore = defineStore('table', {
         selectNode: shallowRef<NodeData | null>(null),
         selectConstrIndex: -1,
         constrNodeRectClickId: "",
-        selectAreaFromNode: "" as "" | "0" | "1" | "2-0" | "2-1" | "2-2" | "3" | "4",
+        selectAreaFromNode: "" as "" | "0" | "1" | "2-0" | "2-1" | "2-2" | "2-3" | "3-0" | "3-1" | "3-2" | "3-3" | "4",
         selectAreaFromLegend: shallowRef<TypeColor[]>([]),
         selectionsAreaFromLegend: shallowRef<Selection[]>([]),
         selectionsPath: shallowRef<number[][]>([]),  // 每一个selection在rawSpecs中对应的path
@@ -233,8 +231,28 @@ export const useTableStore = defineStore('table', {
             key: "3",
             label: "Add Sub-Pattern",
             title: "Add Sub-Pattern",
-            // disabled: true
-            // icon: () => h(MailOutlined),
+            children: [{
+              key: "3-0",
+              label: "Position",
+              title: "Match and Extract by Position",
+              // class: "legend-position",
+              style: { color: typeMapColor['position'] },  // 使用 style 设置样式
+            }, {
+              key: "3-1",
+              label: "Context",
+              title: "Match and Extract by Context",
+              style: { color: typeMapColor['context'] },
+            }, {
+              key: "3-2",
+              label: "Value",
+              title: "Match and Extract by Value",
+              style: { color: typeMapColor['value'] },
+            }, {
+              key: "3-3",
+              label: "Region",
+              title: "Match Without Extraction",
+              style: { color: typeMapColor['null'] },
+            }],
           }, {
             key: "1",
             label: "Add Constraint",
@@ -434,7 +452,7 @@ export const useTableStore = defineStore('table', {
         node.y = isDefinedFromSpecInst.y;
         node.width = isDefinedFromSpecInst.width;
         node.height = isDefinedFromSpecInst.height;
-      } else {
+      } else if (node.currentMatchs.length > 0) {
         const areaBox = node.currentMatchs[0];
         node.x = areaBox.x;
         node.y = areaBox.y;
@@ -601,28 +619,12 @@ export const useTableStore = defineStore('table', {
         // 给每个node赋予type，并计算selectionsAreaFromLegend和selectAreaFromLegend
         node.type = "null";
         if (node.extract !== undefined && node.extract != null) {
-          let extractKeys = 0;
           if (node.extract.byValue !== undefined) {
             node.type = "value";
-            extractKeys++; // extractKeys.push('byValue');
-          }
-          if (node.extract.byContext !== undefined) {
+          } else if (node.extract.byContext !== undefined) {
             node.type = "context";
-            extractKeys++; // extractKeys.push('byContext');
-          }
-          if (node.extract.byPositionToTargetCols !== undefined) {
+          } else if (node.extract.byPositionToTargetCols !== undefined) {
             node.type = "position";
-            extractKeys++; // extractKeys.push('byPositionToTargetCols');
-          }
-
-          if (this.editor.mappingSpec.highlightCode === null && extractKeys > 1) {
-            this.editor.mappingSpec.highlightCode = [...this.getHighlightCodeStartEndLine(node.extract, this.getNodebyPath(this.spec.rawSpecs, node.path!)), 'selectionShallow'];
-
-            const startLine = this.editor.mappingSpec.highlightCode[0];
-            const endLine = this.editor.mappingSpec.highlightCode[1];
-            message.warning(`Multiple keys (${Object.keys(node.extract)}) detected in 'extract' (lines ${startLine}-${endLine}). We'll prioritize and parse in this order: byPositionToTargetCols, byContext, byValue. Any others will be ignored.\nPlease provide only one key for accurate processing.`)
-            this.editor.mappingSpec.triggerCodeChange = false; // 下面的代码修改不会触发 handleCodeChange 函数
-            this.stringifySpec();
           }
         }
         this.spec.selectionsAreaFromLegend.push([node.y, node.x, node.y + node.height - 1, node.x + node.width - 1]);
@@ -648,7 +650,7 @@ export const useTableStore = defineStore('table', {
     },
 
     transformTblUpdateRootArea(specs: TableCanoniserTemplate[] = []) {
-      const { rootArea, tidyData } = transformTable(this.input_tbl.tbl, specs);
+      const { rootArea, tidyData, executionMessages } = transformTable(this.input_tbl.tbl, specs);
       // this.editor.rootArea.codePref + JSON.stringify(rootArea)
       this.editor.rootArea.object = rootArea;
       const strSpec = serialize(rootArea);
@@ -663,8 +665,28 @@ export const useTableStore = defineStore('table', {
       this.spec.selectAreaFromLegend = []
       this.spec.selectionsAreaFromLegend = []
       this.spec.selectionsPath = []
-      this.editor.mappingSpec.highlightCode = null;
+      // this.editor.mappingSpec.highlightCode = null;
       this.traverseTree4UpdateIn2Nodes(this.spec.visTree.children!);
+
+      if (executionMessages.length > 0) {
+        executionMessages.forEach((msg) => {
+          // console.log(msg);
+          const highlightCode: [number, number, string] = [...this.getHighlightCodeStartEndLine(msg.data.code, this.getNodebyPath(this.spec.rawSpecs, msg.data.path)), 'selectionShallow'];
+
+          if (this.editor.mappingSpec.highlightCode === null) {
+            this.editor.mappingSpec.highlightCode = highlightCode;
+          }
+
+          const startLine = highlightCode[0];
+          const endLine = highlightCode[1];
+
+          message.warning(`${msg.type} warning on lines: ${startLine}-${endLine}\n` + msg.message);
+
+        })
+        this.editor.mappingSpec.triggerCodeChange = false; // 下面的代码修改不会触发 handleCodeChange 函数
+        this.stringifySpec();
+      }
+
       return tidyData;
     },
 
@@ -758,9 +780,11 @@ export const useTableStore = defineStore('table', {
         });
       }
       // console.log(posi, posi_mapping);
+      const recordPis: string[] = []
       if (posi) {
         posi.forEach((pi) => {
-          if (pi && pi.startsWith("[") && pi.endsWith("]")) {
+          if (pi && pi.startsWith("[") && pi.endsWith("]") && !recordPis.includes(pi)) {
+            recordPis.push(pi);
             let pi_n = JSON.parse(pi) as [number, number];
             cells.push({ row: pi_n[0], col: pi_n[1], className });
           }
@@ -868,14 +892,11 @@ export const useTableStore = defineStore('table', {
           const [startRow, startCol, endRow, endCol] = selection;
           const width = endCol - startCol + 1;
           const height = endRow - startRow + 1;
-          const traverse = {
+          const traverse = nodes.length > 1 ? {} : {
             xDirection: pw >= 2 * width ? 'after' as const : undefined,
             yDirection: ph >= 2 * height ? 'after' as const : undefined
           }
-          if (nodes.length > 1) {
-            traverse.xDirection = undefined;
-            traverse.yDirection = undefined;
-          }
+
           newSpec.match = {
             startCell: { offsetX: startCol - px, offsetY: startRow - py },
             size: { width, height },
@@ -1407,6 +1428,7 @@ export const useTableStore = defineStore('table', {
     },
 
     getNodebyPath(nodes: TreeNode[], path: number[]) {
+      return getNodebyPath(nodes, path);
       if (path.length === 0) return null; // 如果路径为空，返回null
 
       let currentNodes = nodes
@@ -1426,6 +1448,7 @@ export const useTableStore = defineStore('table', {
       // 如果路径遍历完仍然没有找到目标节点，返回 null
       return null;
     },
+
     /**
      * 默认根据rawSpecs更新editor.mappingSpec.code
      */
@@ -1514,7 +1537,7 @@ export const useTableStore = defineStore('table', {
       }
       if (visNode.path!.length === 0) {
         // 当前节点为根节点
-        this.spec.rawSpecs.push({ match: nodeOrProperty });
+        this.spec.rawSpecs.push(nodeOrProperty);
       } else {
         const currentSpec = this.getNodebyPath(this.spec.rawSpecs, visNode.path!);
         if (currentSpec === null) {
@@ -1524,9 +1547,9 @@ export const useTableStore = defineStore('table', {
         switch (property) {
           case "children":
             if (currentSpec.hasOwnProperty('children') && currentSpec.children != undefined) {
-              currentSpec.children.push({ match: nodeOrProperty });
+              currentSpec.children.push(nodeOrProperty);
             } else {
-              currentSpec.children = [{ match: nodeOrProperty }];
+              currentSpec.children = [nodeOrProperty];
             }
             break;
           case "match":
@@ -1631,9 +1654,20 @@ export const useTableStore = defineStore('table', {
     computeColInfo(tblType: 'input_tbl' | 'output_tbl' = 'input_tbl') {
       const table = this[tblType].tbl;
       this[tblType].colInfo = [];
-      if (table.length === 0) return;
+      if (table.length === 0) {
+        if (tblType === 'input_tbl') {
+          this.spec.visTree.width = 0;
+          this.spec.visTree.height = 0;
+        }
+        return;
+      }
       const hot = this[tblType].instance;
       const colCount = table[0].length;
+
+      if (tblType === 'input_tbl') {
+        this.spec.visTree.width = colCount;
+        this.spec.visTree.height = table.length;
+      }
 
       for (let col = 0; col < colCount; col++) {
         const colInfo: ColInfo = {

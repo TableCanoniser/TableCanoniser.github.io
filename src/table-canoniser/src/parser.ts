@@ -19,6 +19,22 @@ export function serialize(obj: any): string {
 // store the target columns for each template
 var template2Cols: { [key: string]: Set<CellValueType> } = {};
 
+var executionMessages: { type: string, message: string, data: any }[] = [];
+var rawSpecs: TableCanoniserTemplate[] = [];
+
+
+export const getNodebyPath = (nodes: any, path: number[]) => {
+    try {
+        let temp = nodes[path[0]];
+        path.slice(1).forEach((ref) => {
+            temp = temp.children![ref];
+        })
+        return temp
+    } catch (error) {
+        return null
+    }
+}
+
 // Helper function to evaluate constraints
 const evaluateConstraint = (cellValue: CellValueType, constraint: CellConstraint): boolean => {
     if (typeof constraint.valueCstr === 'function') {
@@ -347,11 +363,19 @@ const transformArea = (template: AllParams<TableCanoniserTemplate>, currentArea:
         }
         const validCols: Set<CellValueType> = template2Cols[templateRefStr];
 
+        if (transformedCols.length !== cellArray.length) {
+            if (!executionMessages.some(msg => msg.type === 'MismatchNumberOfCells')) {
+                // 相同类型的错误只会添加一次
+                const code = (getNodebyPath(rawSpecs, currentArea.templateRef) as TableCanoniserTemplate).extract;
+                executionMessages.push({ type: 'MismatchNumberOfCells', message: `The number of extracted columns (${transformedCols.length}) is not consistent with the number of matched cells (${cellArray.length})`, data: { code, path: currentArea.templateRef } });
+            }
+        }
+
         transformedCols.forEach((targetCol, index) => {
             if (targetCol !== null && targetCol !== undefined && targetCol !== '') {
                 const cellInfo: CellInfo = {
-                    x: currentArea.x + index % currentArea.width,
-                    y: currentArea.y + Math.floor(index / currentArea.width),
+                    x: index >= cellArray.length ? -1 : currentArea.x + index % currentArea.width,
+                    y: index >= cellArray.length ? -1 : currentArea.y + Math.floor(index / currentArea.width),
                     value: cellArray[index],
                 };
                 if (tidyData.hasOwnProperty(targetCol)) {
@@ -464,11 +488,31 @@ const processTemplate = (template: AllParams<TableCanoniserTemplate>, currentAre
         })
     }
 
+    if (template.extract) {
+        const extractKeys: string[] = [];
+        for (const key in template.extract) {
+            if (template.extract[key as keyof typeof template.extract] !== undefined) {
+                extractKeys.push(key);
+            }
+        }
+        if (extractKeys.length > 1) {
+            if (!executionMessages.some(msg => msg.type === 'MultipleKeysInExtract')) {
+                // 相同类型的错误只会添加一次
+                const code = (getNodebyPath(rawSpecs, index.templateRef) as TableCanoniserTemplate).extract;
+                executionMessages.push({ type: 'MultipleKeysInExtract', message: `Multiple keys (${extractKeys}) are detected in 'extract'. We'll prioritize and parse in this order: byPositionToTargetCols, byContext, byValue. Any others will be ignored.\nPlease provide only one key for accurate processing.`, data: { code, path: index.templateRef } });
+            }
+        }
+    }
 
 }
 
 /**
  * Transforms messy, two-dimensional data (non-aligned table) into a canonical/tidy table (axis-aligned table) based on a given specification that adheres to the TableCanoniserTemplate interface.
+ * @returns
+ * - tidyData: The transformed canonical/tidy table
+ * - rootArea: A tree data structure that contains the AreaInfo of all matched instances, starting from the root area
+ * - template2Cols: A mapping from template index to its corresponding target columns
+ * - executionMessages: A list of messages during the transformation process
  */
 export function transformTable(table: Table2D, specs: TableCanoniserTemplate[]) {
     const rootArea: AreaInfo = {
@@ -492,11 +536,13 @@ export function transformTable(table: Table2D, specs: TableCanoniserTemplate[]) 
     const tidyData: { [key: string]: CellInfo[] } = {}
 
     template2Cols = {};
+    executionMessages = [];
+    rawSpecs = specs;
 
     specs.forEach((template, ti) => {
         const specWithDefaults = completeSpecification(template);
         processTemplate(specWithDefaults, rootArea, rootArea, tidyData, ti);
     });
 
-    return { tidyData, rootArea, template2Cols };
+    return { tidyData, rootArea, template2Cols, executionMessages };
 }

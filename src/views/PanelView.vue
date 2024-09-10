@@ -55,7 +55,7 @@
               <a-tab-pane key="2">
                 <template #tab>
                   <span style="font-size: 15px"
-                    title="A tree data structure that contains the AreaInfo of the matched instances">
+                    title="A tree data structure that contains the AreaInfo of all matched instances, starting from the root area">
                     Matched Instances [{{ tableStore.spec.matchedInstNum }}]
                   </span>
                 </template>
@@ -87,9 +87,6 @@ import { getNeighborEls, onDrag, endDrag } from '@/utils/dragLayout';
 
 import { useTableStore } from "@/store/table";
 const tableStore = useTableStore();
-
-// let caseOption: Ref<{ value: string; label: string; }[]> = ref([]);
-// let caseOption = ref<{ value: string; label: string }[]>([]);
 
 const caseOption = computed(() => {
   return tableStore.caseList.map((v) => {
@@ -135,6 +132,11 @@ function transformTablebyCode() {
   // PatternVis.methods!.handleCodeChange(tableStore.editor.mappingSpec.code);
   patternVis.value.handleCodeChange(true); // handleCodeChange();
   // loading.value = false;
+  if (tableStore.editor.mappingSpec.highlightCode) {
+    tableStore.highlightCode(...tableStore.editor.mappingSpec.highlightCode);
+    tableStore.editor.mappingSpec.highlightCode = null;
+    tableStore.editor.mappingSpec.triggerCodeChange = true;
+  }
 }
 
 function handleKeydown(event: KeyboardEvent) {

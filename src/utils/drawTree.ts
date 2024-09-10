@@ -227,7 +227,7 @@ function declareContextMenu(tableStore: TableStore, node: NodeData, constrIndex:
   event.preventDefault();
 
   if (node.parent === null) {
-    tableStore.tree.menuList = [tableStore.tree.menuAllList[3]];
+    tableStore.tree.menuList = [tableStore.tree.menuAllList[0]];
   } else if (constrIndex === -1) {
     tableStore.tree.menuList = tableStore.tree.menuAllList.slice(0, -1);
   } else {
@@ -649,6 +649,7 @@ export class TreeChart {
           .attr('stroke-width', typeNodeStyle.connectorLineWidth)
           .attr('transform', `translate(${typeNodeStyle.nodeWidth / 2}, ${typeNodeStyle.nodeHeight / 2})`)
           .attr('cursor', 'pointer')
+          .append('svg:title').text(`Width: ${node.data.width}, Height: ${node.data.height}`)
         return;
       }
 
@@ -667,26 +668,21 @@ export class TreeChart {
         "radius": 5,
         "rounded": "all"
       }
+
+      let tooltipText: any = node.data.matchs?.length;
+      tooltipText = tooltipText === undefined ? "Don't match any instances" : `Match: ${tooltipText} instances`;
+
       // @ts-ignore
-      const singleNodeG = current.patternify({ tag: 'g', selector: `single-node-g`, targetData: (d: any) => [d] });
-      singleNodeG.patternify({ tag: 'path', selector: `node-rect-${node.id}` });
-      singleNodeG.select(`.node-rect-${node.id}`)
+      current.patternify({ tag: 'path', selector: `node-rect-${node.id}` });
+      nodeGroups.select(`.node-rect-${node.id}`)
         .attr('class', `node-rect-${node.id} type-node`)
         .attr('d', customRectCorner(nodeRectData as RectDef))
         .attr('fill', typeMapColor[node.data.type!])
         // .attr('fill', nodeRectData.rectColor)
         // .attr('cursor', (d: any) => (!d.children && !d.hiddenChildren ? 'none' : 'pointer'))
         .attr('cursor', 'pointer')
-      // .attr('pointer-events', (d: any) => (!d.children && !d.hiddenChildren ? 'none' : 'all'));
-
-      let tooltipText: any = node.data.matchs?.length;
-      tooltipText = tooltipText === undefined ? "\nDon't match any instances" : `\nMatch: ${tooltipText} instances`;
-
-      singleNodeG.patternify({ tag: 'svg:title', selector: 'node-tooltip' });
-      singleNodeG.select('.node-tooltip')
-        // .filter(({ data: info }: any) => info.dataTypeText !== info.dataTypeTextTruncated)
-        .text("Pattern Path: " + JSON.stringify(node.data.path) + tooltipText);
-      // .text("Pattern Path: " + JSON.stringify(node.data.path) + "\nPattern Id: " + node.data.id + tooltipText);
+        // .attr('pointer-events', (d: any) => (!d.children && !d.hiddenChildren ? 'none' : 'all'));
+        .append('svg:title').text(`Width: ${node.data.width}, Height: ${node.data.height}\nPattern Path: ${JSON.stringify(node.data.path)}\n` + tooltipText)
 
       /** 绘制节点的constraints */
       node.data.match?.constraints?.forEach((_constraint, i) => {
