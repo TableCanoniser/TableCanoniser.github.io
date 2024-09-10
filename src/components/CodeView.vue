@@ -52,35 +52,27 @@ const initEditor = () => {
     };
     editor = monaco.editor.create(editorWrapper.value!, editorOptions as monaco.editor.IEditorConstructionOptions);  // ! means that editorWrapper.value is not null
 
-    editor.onDidBlurEditorText((e) => {
-        // 失焦事件优先于别的按钮的点击事件
-        if (codeType === "mappingSpec") {
-            tableStore.checkGrammarError();
-            if (tableStore.editor.mappingSpec.errorMark !== null) return
-        }
+    const updateCode = tableStore.debounce(() => {
+        tableStore.checkGrammarError();
+        if (tableStore.editor.mappingSpec.errorMark !== null) return
+
         const value = editor!.getValue();
         if (areStringEqual(tableStore.editor[codeType].code, value)) return; // 忽略换行还有空格之后比较字符串是否相等
-        if (codeType === "mappingSpec") {
-            tableStore.spec.undoHistory.push(tableStore.editor.mappingSpec.code);
-            // 当执行新的操作时，重做历史应当清空
-            tableStore.spec.redoHistory = [];
-            tableStore.editor.mappingSpec.codeUpdateFromEditor = true;
-        }
-        tableStore.editor[codeType].code = value;
-        // console.log('onblur', e);
-    });
-    if (codeType === "mappingSpec") {
-        // 编辑器内容变化时取消高亮
-        editor.onDidChangeModelContent(() => {
-            tableStore.editor.mappingSpec.decorations?.clear();
-        })
-    }
-};
 
-watch(() => tableStore.editor.rootArea.code, (newVal) => {
-    // console.log("watch editor code", codeType);
-    tableStore.editor.rootArea.instance?.setValue(newVal);  // update editor content; ? means if editor is not null then call setValue, else do nothing
-});
+        tableStore.spec.undoHistory.push(tableStore.editor.mappingSpec.code);
+        // 当执行新的操作时，重做历史应当清空
+        tableStore.spec.redoHistory = [];
+        tableStore.editor.mappingSpec.codeUpdateFromEditor = true;
+        tableStore.editor[codeType].code = value;
+    }, 1000);
+
+    // editor.onDidBlurEditorText(updateCode);
+    // 失焦事件优先于别的按钮的点击事件
+    editor.onDidChangeModelContent(() => {
+        tableStore.editor.mappingSpec.decorations?.clear();
+        updateCode();
+    });
+};
 
 /*
 watch(() => tableStore.editor[codeType].code, (newVal) => {

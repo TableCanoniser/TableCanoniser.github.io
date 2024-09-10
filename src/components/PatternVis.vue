@@ -283,23 +283,23 @@ function handleCodeChange(clickFlag = false) {
         }, 600)
         if (clickFlag) return;
     }
-    if (tableStore.editor.mappingSpec.code !== tableStore.editor.mappingSpec.instance!.getValue()) {
-        tableStore.editor.mappingSpec.instance?.setValue(tableStore.editor.mappingSpec.code);
-    }
     const setFlag = tableStore.prepareDataAfterCodeChange();
     if (!setFlag) return;
     if (document.body.style.cursor === 'default') {
         drawMinimap(tableStore.input_tbl.tbl.length, tableStore.input_tbl.tbl[0].length, tblContainer.value, tableStore);
     }
-    tableStore.transformTablebyCode();  // auto run
-    if (tableStore.editor.mappingSpec.triggerCodeChange && tableStore.editor.mappingSpec.highlightCode) {
-        // console.log('handleCodeChange-highlightCode', tableStore.editor.mappingSpec.highlightCode);
-        tableStore.highlightCode(...tableStore.editor.mappingSpec.highlightCode);
-        tableStore.editor.mappingSpec.highlightCode = null;
-    }
+    const transformRes = tableStore.transformTablebyCode();  // auto run
+
     setTimeout(() => {
         tableStore.editor.mappingSpec.triggerCodeChange = true;
+        if (tableStore.editor.mappingSpec.highlightCode) {
+            // console.log('handleCodeChange-highlightCode', tableStore.editor.mappingSpec.highlightCode);
+            tableStore.highlightCode(...tableStore.editor.mappingSpec.highlightCode);
+            tableStore.editor.mappingSpec.highlightCode = null;
+        }
     }, 600)
+
+    if (!transformRes) return;
 
     if (tableStore.spec.matchedInstNum === 0) {
         instanceContent.value = 'No matched instance';
@@ -310,12 +310,8 @@ function handleCodeChange(clickFlag = false) {
     tableStore.computeColInfo("output_tbl");
     drawTree(tableStore.spec.visTree); // 会默认选择第一个节点
     drawTblTemplate(tblContainer.value, tableStore);
-    // console.log(tableStore.input_tbl.instance.get);
-    // console.log('watch code changed: end');
     tableStore.optimizeMiniTempDistance();
     tableStore.updateCurve();
-    // currentInstFlag.value = tableStore.spec.visTree.children!.length > 0 && tableStore.spec.visTree.children![0].matchs !== undefined && tableStore.spec.visTree.children![0].matchs!.length > 0;
-    // disableNextFlag.value = tableStore.spec.selectNode === null || tableStore.spec.visTree.children!.length === 0 || tableStore.spec.visTree.children![0].matchs === undefined || tableStore.tree.instanceIndex === tableStore.spec.visTree.children![0].matchs!.length - 1;
 }
 
 // const debouncedHandleCodeChange = tableStore.debounce(handleCodeChange, 200); // 200ms 的延迟
@@ -326,10 +322,12 @@ defineExpose({ handleCodeChange });
 
 watch(() => tableStore.editor.mappingSpec.code, (newVal) => {
     // console.log('watch code changed start');
+    tableStore.editor.mappingSpec.instance?.setValue(newVal);
     if (tableStore.editor.mappingSpec.triggerCodeChange) {
         handleCodeChange()
-    } else if (tableStore.editor.mappingSpec.highlightCode) {
-        tableStore.editor.mappingSpec.instance?.setValue(newVal);
+    }
+    else if (tableStore.editor.mappingSpec.highlightCode) {
+        // console.log('watch code-highlightCode', tableStore.editor.mappingSpec.highlightCode);
         tableStore.highlightCode(...tableStore.editor.mappingSpec.highlightCode);
         tableStore.editor.mappingSpec.highlightCode = null;
         tableStore.editor.mappingSpec.triggerCodeChange = true;
@@ -338,7 +336,6 @@ watch(() => tableStore.editor.mappingSpec.code, (newVal) => {
 
 watch(() => tableStore.tree.instanceIndex, () => {
     drawTblTemplate(tblContainer.value, tableStore);
-    // disableNextFlag.value = tableStore.spec.selectNode === null || tableStore.spec.visTree.children!.length === 0 || tableStore.spec.visTree.children![0].matchs === undefined || tableStore.tree.instanceIndex === tableStore.spec.visTree.children![0].matchs!.length - 1;
     tableStore.updateCurve();
 });
 

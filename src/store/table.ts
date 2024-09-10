@@ -1196,7 +1196,7 @@ export const useTableStore = defineStore('table', {
       if (this.editor.mappingSpec.errorMark !== null) {
         const marker = this.editor.mappingSpec.errorMark;
         message.error(`Invalid syntax at Line ${marker.startLineNumber}, Column ${marker.startColumn}:\n ${marker.message}`);
-        return;
+        return false;
       }
       let messageContent = ''
       try {
@@ -1243,6 +1243,7 @@ export const useTableStore = defineStore('table', {
 
         // this.tree.minimapInstHighlight!.select('rect:nth-child(1)').attr('stroke', typeMapColor.selection);
         this.highlightMinimapInsts();
+        return true
       } catch (e) {
         if (e instanceof CustomError) {
           messageContent = `Failed to transform the table based on the specification:\n ${e}`
@@ -1251,6 +1252,7 @@ export const useTableStore = defineStore('table', {
         }
         message.error(messageContent);
         console.error(e);
+        return false
       }
     },
 
@@ -1472,10 +1474,12 @@ export const useTableStore = defineStore('table', {
       }
 
       if (replaceCode) {
-        this.spec.undoHistory.push(this.editor.mappingSpec.code);
-        // 当执行新的操作时，重做历史应当清空
-        this.spec.redoHistory = [];
         this.editor.mappingSpec.code = this.editor.mappingSpec.codePref + strSpec;
+        if (this.editor.mappingSpec.triggerCodeChange) {
+          this.spec.undoHistory.push(this.editor.mappingSpec.code);
+          // 当执行新的操作时，重做历史应当清空
+          this.spec.redoHistory = [];
+        }
         // this.editor.mappingSpec.instance?.setValue(this.editor.mappingSpec.code);
         // this.editor.mappingSpecinstance?.getAction('editor.action.formatDocument')?.run();
         // this.editor.mappingSpec.instance?.trigger('editor', 'editor.action.formatDocument', null);
