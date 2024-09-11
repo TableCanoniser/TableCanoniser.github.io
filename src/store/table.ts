@@ -179,7 +179,8 @@ export const useTableStore = defineStore('table', {
           // language: 'typescript',
           instance: shallowRef<monaco.editor.IStandaloneCodeEditor | null>(null),
           triggerCodeChange: true,
-          codeUpdateFromEditor: false
+          codeUpdateFromEditor: false,
+          autoRun: true
         },
         rootArea: {
           code: '',
@@ -288,13 +289,13 @@ export const useTableStore = defineStore('table', {
           }, {
             key: "4",
             label: "Delete This Pattern",
-            title: "Delete This Pattern",
+            title: "Delete This Pattern.\nShortcut: Delete/Backspace",
             // disabled: true
             // icon: () => h(MailOutlined),
           }, {
             key: "5",
             label: "Delete Constraint",
-            title: "Delete Constraint",
+            title: "Delete Constraint.\nShortcut: Delete/Backspace",
           }],
         menuList: [] as Array<{ [key: string]: any }>,
       }
@@ -671,7 +672,11 @@ export const useTableStore = defineStore('table', {
       if (executionMessages.length > 0) {
         executionMessages.forEach((msg) => {
           // console.log(msg);
-          const highlightCode: [number, number, string] = [...this.getHighlightCodeStartEndLine(msg.data.code, this.getNodebyPath(this.spec.rawSpecs, msg.data.path)), 'selectionShallow'];
+          const currentNode: TableCanoniserTemplate = this.getNodebyPath(this.spec.rawSpecs, msg.data.path)
+          if (msg.type === "MismatchNumberOfCells") {
+            currentNode.extract = msg.data.code
+          }
+          const highlightCode: [number, number, string] = [...this.getHighlightCodeStartEndLine(msg.data.code, currentNode), 'selectionShallow'];
 
           if (this.editor.mappingSpec.highlightCode === null) {
             this.editor.mappingSpec.highlightCode = highlightCode;

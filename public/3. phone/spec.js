@@ -95,7 +95,7 @@ const option: TableCanoniserTemplate[] = [
             },
           ],
           traverse: {
-            yDirection: "whole",
+            yDirection: "beforeAndAfter",
           },
         },
         children: [
@@ -153,7 +153,7 @@ const option: TableCanoniserTemplate[] = [
             },
           ],
           traverse: {
-            yDirection: "whole",
+            yDirection: "beforeAndAfter",
           },
         },
         extract: {

@@ -671,6 +671,7 @@ export class TreeChart {
 
       let tooltipText: any = node.data.matchs?.length;
       tooltipText = tooltipText === undefined ? "Don't match any instances" : `Match: ${tooltipText} instances`;
+      // tooltipText += '\nPress Delete/Backspace to delete this pattern.';
 
       // @ts-ignore
       current.patternify({ tag: 'path', selector: `node-rect-${node.id}` });
@@ -740,6 +741,13 @@ export class TreeChart {
           })
           .attr('width', iconsz)
           .attr('height', iconsz)
+          .attr('tabindex', 0)  // 使 rect 可聚焦，但点击后会触发focus，默认会有 outline样式，需要设置 outline: none
+          .on("keyup", (e: KeyboardEvent, d: NodeData) => {
+            if (e.key === "Delete" || e.key === "Backspace") {
+              tableStore.deleteChildByPath(tableStore.spec.rawSpecs, d.data.path!, i);
+              tableStore.stringifySpec();
+            }
+          })
           .on('mouseover', (_e: any, d: NodeData) => {
             // console.log('mouseover', d);
             try {
@@ -777,17 +785,23 @@ export class TreeChart {
           .on('contextmenu', declareContextMenu.bind(null, tableStore, node, i))  // bind 第一个参数为 this，这种情况下最后一个参数为 event
           .on('click', (_e: any, d: NodeData) => {
             try {
-              // console.time('constraint click');
-              // console.log(constraint, tableStore);  // constraint 等价于 d.data.constraints![i]
-              tableStore.editor.mappingSpec.instance?.setValue(tableStore.editor.mappingSpec.codePref + tableStore.stringifySpec(null, "even", false));
               // 先清空其他样式
               document.dispatchEvent(escapeEvent);
 
               tableStore.spec.constrNodeRectClickId = constrId;
               constrNodeRect.attr('visibility', 'visible');
 
-              const [startLine, endLine] = tableStore.getHighlightCodeStartEndLine(constraint, subTemplate);
-              tableStore.highlightCode(startLine, endLine, 'selectionShallow');
+              tableStore.editor.mappingSpec.highlightCode = [...tableStore.getHighlightCodeStartEndLine(constraint, subTemplate), 'selectionShallow'];
+              tableStore.editor.mappingSpec.triggerCodeChange = false;
+              const newCode = tableStore.editor.mappingSpec.codePref + tableStore.stringifySpec(null, "even", false);
+              if (tableStore.editor.mappingSpec.code === newCode) {
+                tableStore.highlightCode(...tableStore.editor.mappingSpec.highlightCode);
+                tableStore.editor.mappingSpec.highlightCode = null;
+                tableStore.editor.mappingSpec.triggerCodeChange = true;
+              } else {
+                tableStore.editor.mappingSpec.code = newCode;
+              }
+
               const cellInfoSelections = d.data.constrsInfo![i].map((cellInfo) => [cellInfo.y, cellInfo.x, cellInfo.y, cellInfo.x] as Selection);
               const classNames = Array(cellInfoSelections.length).fill("selectionShallow");
               const cells = tableStore.generateHighlightCells(cellInfoSelections, classNames);
@@ -807,20 +821,21 @@ export class TreeChart {
           })
           .append('svg:title').text(() => {
             const valueCstr = constraint.valueCstr;
+            // const msg = '\nPress Delete/Backspace to delete this constraint.';
             if (typeof valueCstr === 'function') {
-              return "The cell is constrained by a custom function:\nClick to see details in the Code Panel.";
+              return "The cell is constrained by a custom function:\nClick to see details in the Code Panel."
             } else {
               switch (valueCstr) {
                 case TableCanoniserKeyWords.String:
-                  return "The cell's data type should be a string.";
+                  return "The cell's data type should be a string."
                 case TableCanoniserKeyWords.Number:
-                  return "The cell's data type should be a number.";
+                  return "The cell's data type should be a number."
                 case TableCanoniserKeyWords.None:
-                  return "The cell should be an empty string, null, or undefined.";
+                  return "The cell should be an empty string, null, or undefined."
                 case TableCanoniserKeyWords.NotNone:
-                  return "The cell should not be an empty string, null, or undefined.";
+                  return "The cell should not be an empty string, null, or undefined."
                 default:
-                  return "The cell should be " + valueCstr;
+                  return "The cell should be " + valueCstr + "."
               }
             }
           })
@@ -875,6 +890,13 @@ export class TreeChart {
     // 为所有circle和rect绑定展开收起交互事件
     // d3.selectAll('.type-node, .node-text-g')
     d3.selectAll<SVGElement, NodeData>('.type-node')
+      .attr('tabindex', 0)  // 使 rect 可聚焦，但点击后会触发focus，默认会有 outline样式，需要设置 outline: none
+      .on("keyup", (e: KeyboardEvent, d: NodeData) => {
+        if (e.key === "Delete" || e.key === "Backspace" && d.data.id !== 0) {
+          tableStore.deleteChildByPath(tableStore.spec.rawSpecs, d.data.path!);
+          tableStore.stringifySpec();
+        }
+      })
       .on('contextmenu', (e, d) => {
         declareContextMenu(tableStore, d, -1, e);
       })
@@ -890,7 +912,8 @@ export class TreeChart {
         // d3.selectAll('.type-node').classed('selection', false);
         tableStore.clearStatus("tree");
         if (d.id) {
-          tableStore.editor.mappingSpec.instance?.setValue(tableStore.editor.mappingSpec.codePref + tableStore.stringifySpec(null, "even", false));
+          // tableStore.editor.mappingSpec.instance?.setValue(tableStore.editor.mappingSpec.codePref + tableStore.stringifySpec(null, "even", false));
+          // tableStore.stringifySpec();
           // if (tableStore.spec.selectNode === null || tableStore.spec.selectNode.data.id !== node.data.id) {}
           tableStore.spec.selectNode = d;
           // tableStore.tree.instanceIndex = 0;
@@ -905,13 +928,20 @@ export class TreeChart {
 
           /************** 与 monaco editor 交互 ***************/
           const subTemplate = tableStore.getNodebyPath(tableStore.spec.rawSpecs, visData.path!);
-          const [startLine, endLine] = tableStore.getHighlightCodeStartEndLine(subTemplate);
-          tableStore.highlightCode(startLine, endLine, `${visData.type}Shallow`);
+          // const [startLine, endLine] = tableStore.getHighlightCodeStartEndLine(subTemplate);
+          // tableStore.highlightCode(startLine, endLine, `${visData.type}Shallow`);
+          tableStore.editor.mappingSpec.highlightCode = [...tableStore.getHighlightCodeStartEndLine(subTemplate), `${visData.type}Shallow`];
+          tableStore.editor.mappingSpec.triggerCodeChange = false;
+          const newCode = tableStore.editor.mappingSpec.codePref + tableStore.stringifySpec(null, "even", false);
+          if (tableStore.editor.mappingSpec.code === newCode) {
+            tableStore.highlightCode(...tableStore.editor.mappingSpec.highlightCode);
+            tableStore.editor.mappingSpec.highlightCode = null;
+            tableStore.editor.mappingSpec.triggerCodeChange = true;
+          } else {
+            tableStore.editor.mappingSpec.code = newCode;
+          }
         } else {
-          // tableStore.editor.mappingSpec.decorations?.clear();
-          // 将事件分发到目标元素或整个文档
           document.dispatchEvent(escapeEvent);
-          // d3.select(this).classed('selection', true);
         }
         return;
         // this.handleCircleClick(event, d);  // 收缩节点

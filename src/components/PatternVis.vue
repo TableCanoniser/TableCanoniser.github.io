@@ -321,7 +321,7 @@ function handleCodeChange(clickFlag = false) {
 defineExpose({ handleCodeChange });
 
 watch(() => tableStore.editor.mappingSpec.code, (newVal) => {
-    // console.log('watch code changed start');
+    // console.log('watch code changed start', tableStore.editor.mappingSpec.triggerCodeChange);
     tableStore.editor.mappingSpec.instance?.setValue(newVal);
     if (tableStore.editor.mappingSpec.triggerCodeChange) {
         handleCodeChange()
@@ -389,6 +389,11 @@ onMounted(() => {
     .type-node.selection {
         stroke: var(--color-selection);
         stroke-width: 3px;
+    }
+
+    .type-node:focus,
+    image:focus {
+        outline: none;
     }
 }
 

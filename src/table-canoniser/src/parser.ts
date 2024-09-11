@@ -367,7 +367,16 @@ const transformArea = (template: AllParams<TableCanoniserTemplate>, currentArea:
             if (!executionMessages.some(msg => msg.type === 'MismatchNumberOfCells')) {
                 // 相同类型的错误只会添加一次
                 const code = (getNodebyPath(rawSpecs, currentArea.templateRef) as TableCanoniserTemplate).extract;
-                executionMessages.push({ type: 'MismatchNumberOfCells', message: `The number of extracted columns (${transformedCols.length}) is not consistent with the number of matched cells (${cellArray.length})`, data: { code, path: currentArea.templateRef } });
+                let message: string;
+                if (transformedCols.length > cellArray.length) {
+                    message = `The number of extracted columns (${transformedCols.length}) is larger than the number of matched cells (${cellArray.length}).`;
+                } else {
+                    if (code?.byPositionToTargetCols !== undefined) {
+                        code.byPositionToTargetCols = [...code.byPositionToTargetCols, ...Array(cellArray.length - transformedCols.length).fill(null)];
+                    }
+                    message = `The number of extracted columns (${transformedCols.length}) is less than the number of matched cells (${cellArray.length}).\nWe have automatically filled the missing columns with null.`;
+                }
+                executionMessages.push({ type: 'MismatchNumberOfCells', message, data: { code, path: currentArea.templateRef } });
             }
         }
 

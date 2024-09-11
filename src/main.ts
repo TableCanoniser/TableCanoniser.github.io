@@ -6,11 +6,11 @@ import { createPinia } from 'pinia'
 const pinia = createPinia()
 const app = createApp(App)
 
-import { Select, Upload, Button, Tabs, Tooltip, Popover, Input, Modal, Space, Dropdown, Menu, Form, Row, Col, Radio, Divider, Flex, InputNumber } from "ant-design-vue";
+import { Select, Upload, Button, Tabs, Tooltip, Popover, Input, Modal, Space, Dropdown, Menu, Form, Row, Col, Radio, Divider, Flex, InputNumber, Checkbox } from "ant-design-vue";
 // import 'ant-design-vue/dist/reset.css';
 
 app.use(pinia).use(Select).use(Tabs).use(Button).use(Upload)
-    .use(Tooltip).use(Popover).use(Input).use(Modal).use(Space).use(Dropdown).use(Menu).use(Form).use(Row).use(Col).use(Radio).use(Divider).use(Flex).use(InputNumber);
+    .use(Tooltip).use(Popover).use(Input).use(Modal).use(Space).use(Dropdown).use(Menu).use(Form).use(Row).use(Col).use(Radio).use(Divider).use(Flex).use(InputNumber).use(Checkbox);
 
 // A Vue component for including inline SVG icons from different popular iconpacks easily.
 // https://oh-vue-icons.js.org/docs   // MdFitscreenOutlined

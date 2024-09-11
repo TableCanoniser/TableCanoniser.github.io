@@ -37,7 +37,12 @@
           <div class="view-content">
             <a-tabs v-model:activeKey="codePanel" type="card">
               <template #rightExtra>
-                <a-button size="small" style="margin-right: 10px; margin-bottom: 10px;" @click="transformTablebyCode">
+                <!-- <a-switch v-model:checked="tableStore.editor.mappingSpec.autoRun" size="small" checked-children="On"
+                  un-checked-children="Off"
+                  title="Set whether to automatically run the mapping specification after changing code" /> -->
+                <span title="Set whether to automatically run code upon changes">
+                  <a-checkbox v-model:checked="tableStore.editor.mappingSpec.autoRun">AutoRun</a-checkbox></span>
+                <a-button size="small" style="margin: 1px 6px 5px;" @click="transformTablebyCode">
                   <v-icon name="la-rocket-solid" scale="0.85"></v-icon>
                   <span>Run</span>
                 </a-button>
@@ -50,7 +55,7 @@
                     Specification
                   </span>
                 </template>
-                <CodeView codeType="mappingSpec" />
+                <CodeView codeType="mappingSpec" ref="specCode" />
               </a-tab-pane>
               <a-tab-pane key="2">
                 <template #tab>
@@ -86,6 +91,7 @@ document.documentElement.style.setProperty('--custom-cursor', 'default');
 import { getNeighborEls, onDrag, endDrag } from '@/utils/dragLayout';
 
 import { useTableStore } from "@/store/table";
+import { message } from "ant-design-vue";
 const tableStore = useTableStore();
 
 const caseOption = computed(() => {
@@ -124,12 +130,18 @@ function redo() {
 
 // 获取组件 PatternVis 的实例引用
 const patternVis = ref();
+const specCode = ref();
 function transformTablebyCode() {
-  // loading.value = true;
-  // tableStore.transformTablebyCode();
-  // triggerRef(ref(tableStore.editor.mappingSpec.code));
-  // 即使新值和旧值相同，重新赋值依然会触发 watch：
-  // PatternVis.methods!.handleCodeChange(tableStore.editor.mappingSpec.code);
+  if (!tableStore.editor.mappingSpec.autoRun) {
+    if (tableStore.editor.mappingSpec.errorMark !== null) {
+      const marker = tableStore.editor.mappingSpec.errorMark;
+      message.error(`Invalid syntax at Line ${marker.startLineNumber}, Column ${marker.startColumn}:\n ${marker.message}`);
+      return false;
+    }
+    const newCode = tableStore.editor.mappingSpec.instance!.getValue();
+    specCode.value.updateCode(newCode);
+  }
+
   patternVis.value.handleCodeChange(true); // handleCodeChange();
   // loading.value = false;
   if (tableStore.editor.mappingSpec.highlightCode) {
@@ -320,6 +332,11 @@ onMounted(() => {
 
 .ant-btn-default {
   transition: 0s;
+}
+
+.ant-checkbox+span {
+  padding-inline-start: 5px;
+  padding-inline-end: 4px;
 }
 
 .ant-btn-default:hover {

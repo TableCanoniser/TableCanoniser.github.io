@@ -42,6 +42,17 @@ let editor: monaco.editor.IStandaloneCodeEditor | null = null;
 const regex = /\s+/g;
 const areStringEqual = (str1: string, str2: string) => (str1.replace(regex, '') === str2.replace(regex, ''));
 
+const updateCode = (newCode: string) => {
+    if (areStringEqual(tableStore.editor[codeType].code, newCode)) return; // 忽略换行还有空格之后比较字符串是否相等
+    tableStore.spec.undoHistory.push(tableStore.editor.mappingSpec.code);
+    // 当执行新的操作时，重做历史应当清空
+    tableStore.spec.redoHistory = [];
+    tableStore.editor.mappingSpec.codeUpdateFromEditor = true;
+    tableStore.editor[codeType].code = newCode;
+}
+
+defineExpose({ updateCode });
+
 const initEditor = () => {
     if (editor) { // if editor is already initialized, dispose it first
         editor.dispose();
@@ -52,25 +63,20 @@ const initEditor = () => {
     };
     editor = monaco.editor.create(editorWrapper.value!, editorOptions as monaco.editor.IEditorConstructionOptions);  // ! means that editorWrapper.value is not null
 
-    const updateCode = tableStore.debounce(() => {
+    const debounceUpdateCode = tableStore.debounce(() => {
         tableStore.checkGrammarError();
         if (tableStore.editor.mappingSpec.errorMark !== null) return
 
-        const value = editor!.getValue();
-        if (areStringEqual(tableStore.editor[codeType].code, value)) return; // 忽略换行还有空格之后比较字符串是否相等
-
-        tableStore.spec.undoHistory.push(tableStore.editor.mappingSpec.code);
-        // 当执行新的操作时，重做历史应当清空
-        tableStore.spec.redoHistory = [];
-        tableStore.editor.mappingSpec.codeUpdateFromEditor = true;
-        tableStore.editor[codeType].code = value;
+        if (tableStore.editor.mappingSpec.autoRun) {
+            updateCode(editor!.getValue());
+        }
     }, 1000);
 
     // editor.onDidBlurEditorText(updateCode);
     // 失焦事件优先于别的按钮的点击事件
     editor.onDidChangeModelContent(() => {
         tableStore.editor.mappingSpec.decorations?.clear();
-        updateCode();
+        debounceUpdateCode();
     });
 };
 
