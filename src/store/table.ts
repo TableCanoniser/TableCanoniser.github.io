@@ -1479,12 +1479,12 @@ export const useTableStore = defineStore('table', {
       }
 
       if (replaceCode) {
-        this.editor.mappingSpec.code = this.editor.mappingSpec.codePref + strSpec;
         if (this.editor.mappingSpec.triggerCodeChange) {
           this.spec.undoHistory.push(this.editor.mappingSpec.code);
           // 当执行新的操作时，重做历史应当清空
           this.spec.redoHistory = [];
         }
+        this.editor.mappingSpec.code = this.editor.mappingSpec.codePref + strSpec;
         // this.editor.mappingSpec.instance?.setValue(this.editor.mappingSpec.code);
         // this.editor.mappingSpecinstance?.getAction('editor.action.formatDocument')?.run();
         // this.editor.mappingSpec.instance?.trigger('editor', 'editor.action.formatDocument', null);

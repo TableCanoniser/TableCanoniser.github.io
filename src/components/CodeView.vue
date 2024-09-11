@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import * as monaco from "monaco-editor";
-import { onMounted, onUnmounted, ref, watch } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 import { useTableStore } from "@/store/table";
 
 
@@ -43,12 +43,12 @@ const regex = /\s+/g;
 const areStringEqual = (str1: string, str2: string) => (str1.replace(regex, '') === str2.replace(regex, ''));
 
 const updateCode = (newCode: string) => {
-    if (areStringEqual(tableStore.editor[codeType].code, newCode)) return; // 忽略换行还有空格之后比较字符串是否相等
+    if (areStringEqual(tableStore.editor.mappingSpec.code, newCode)) return; // 忽略换行还有空格之后比较字符串是否相等
     tableStore.spec.undoHistory.push(tableStore.editor.mappingSpec.code);
     // 当执行新的操作时，重做历史应当清空
     tableStore.spec.redoHistory = [];
     tableStore.editor.mappingSpec.codeUpdateFromEditor = true;
-    tableStore.editor[codeType].code = newCode;
+    tableStore.editor.mappingSpec.code = newCode;
 }
 
 defineExpose({ updateCode });
