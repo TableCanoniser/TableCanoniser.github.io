@@ -934,6 +934,7 @@ export class TreeChart {
           tableStore.editor.mappingSpec.triggerCodeChange = false;
           const newCode = tableStore.editor.mappingSpec.codePref + tableStore.stringifySpec(null, "even", false);
           if (tableStore.editor.mappingSpec.code === newCode) {
+            tableStore.editor.mappingSpec.instance?.setValue(newCode);
             tableStore.highlightCode(...tableStore.editor.mappingSpec.highlightCode);
             tableStore.editor.mappingSpec.highlightCode = null;
             tableStore.editor.mappingSpec.triggerCodeChange = true;

@@ -421,8 +421,9 @@ function initEventsForTbl(tbl: "input_tbl" | "output_tbl") {
             // Add Constraints Logic
             const cellValue = inHotInst.getDataAtCell(startRow, startCol);
             const constraint = {
-              offsetX: offsetX,
-              offsetY: offsetY,
+              offsetFrom: "topLeft",
+              offsetX,
+              offsetY,
               valueCstr: tableStore.getCellDataType(cellValue) // TableCanoniserKeyWords.String,
             }
             tableStore.insertNodeOrPropertyIntoSpecs(constraint, "constraints");

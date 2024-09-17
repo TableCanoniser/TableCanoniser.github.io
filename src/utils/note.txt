@@ -7,3 +7,6 @@ npm install
 
 有几个功能要改：
 4. current instance: next 的时候应该跳转到该Pattern的下一个实例中，但高亮框应该还是原来的
+
+
+1. 上传新数据后，会清空右侧的specification code 以及下方的可视化

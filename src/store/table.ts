@@ -1329,18 +1329,8 @@ export const useTableStore = defineStore('table', {
 
       while (nodes.length) {
         const node = nodes.shift() as VisTreeNode;
-
-        // const xDirection = node.match?.traverse?.xDirection;
-        // const yDirection = node.match?.traverse?.yDirection;
-        // if ((xDirection === undefined || xDirection === null) && (yDirection === undefined || yDirection === null)) {};
-
-
-        // if (!(node.x >= box[0] && node.y >= box[1] && node.x + node.width <= box[2] && node.y + node.height <= box[3])) continue;
-
-        // 当前属于模版里面的节点
-        // node.matchs!.forEach(match => {});
-        if (node.matchs === undefined) continue;
-        for (const match of node.matchs) {
+        if (node.currentMatchs === undefined) continue;  // change matchs to currentMatchs
+        for (const match of node.currentMatchs) {
           const { x, y, width, height } = match;
           const offsetX = x - box[0];
           const offsetY = y - box[1];
