@@ -373,8 +373,13 @@ onMounted(() => {
 <style lang="less">
 .goToInstance {
     // margin-right: calc(40vw - 430px);
-    width: 58px;
+    width: 59px;
     margin: 0 6px;
+
+    /* 让数字输入框内的上下键直接可见 */
+    .ant-input-number-handler-wrap {
+        opacity: 1;
+    }
 }
 
 .tree-container {
