@@ -488,26 +488,26 @@ export const useTableStore = defineStore('table', {
       // instanceIndex 的变化会触发drawTblTemplate等事件
       this.tree.instanceIndex = instance;
       this.updateVisTreeAreaBox();
-      this.hightlightViewsAfterClickNode();
+      this.highlightViewsAfterClickNode();
 
       if (this.tree.minimapInstHighlight && this.tree.minimapInstHighlight.selectAll('rect').size() === 0) {
         this.highlightMinimapInsts();
       };
 
-      const hightlight = this.tree.minimapInstHighlight!;
-      hightlight.selectAll('rect').attr('stroke', 'none');
-      hightlight.select(`rect:nth-child(${this.tree.instanceIndex + 1})`).attr('stroke', typeMapColor.selection);
+      const highlight = this.tree.minimapInstHighlight!;
+      highlight.selectAll('rect').attr('stroke', 'none');
+      highlight.select(`rect:nth-child(${this.tree.instanceIndex + 1})`).attr('stroke', typeMapColor.selection);
 
       // this.updateCurve();
     },
     highlightMinimapInsts() {
-      const hightlight = this.tree.minimapInstHighlight!;
+      const highlight = this.tree.minimapInstHighlight!;
       const visInfo = this.tree.minimapVisInfo!;
       const tableStore = this;
 
-      hightlight.selectAll('rect').remove();
+      highlight.selectAll('rect').remove();
       if (this.spec.visTree.children!.length === 0 || this.spec.visTree.children![0].matchs === undefined) return;
-      hightlight.raise().selectAll('rect').data(this.spec.visTree.children![0].matchs!.map((d, i) => ({ x: d.x, y: d.y, width: d.width, height: d.height, index: i })))
+      highlight.raise().selectAll('rect').data(this.spec.visTree.children![0].matchs!.map((d, i) => ({ x: d.x, y: d.y, width: d.width, height: d.height, index: i })))
         .enter().append('rect') // .classed('grid-inst', true)
         .attr('x', d => d.x * visInfo.width)
         .attr('y', d => d.y * visInfo.height)
@@ -741,7 +741,7 @@ export const useTableStore = defineStore('table', {
       });
     },
 
-    hightlightViewsAfterClickNode() {
+    highlightViewsAfterClickNode() {
       const clickNode = this.tree.clickNode;
       const nodeConstrId = this.tree.clickConstrIndex;
       d3.select('.tbl-container .tbl-template-highlight').selectAll('rect').remove();
@@ -1162,13 +1162,15 @@ export const useTableStore = defineStore('table', {
     },
 
     prepareDataAfterCodeChange() {
-      const codeFormat = "Example format:\n" + this.editor.mappingSpec.codePref + "[\n // Please write the specification here\n];"
+      const codeFormat = "Example format:\n" + this.editor.mappingSpec.codePref + "[\n  // Please write the specification here\n];"
       try {
         // Step 1: update specs, including rawSpecs and visTree
         // let code = this.editor.mappingSpec.instance!.getValue();
         let code = this.editor.mappingSpec.code;
         if (code.trim() === "") {
-          message.error("Empty code!\nPlease provide your code input. " + codeFormat);
+          // message.error("Empty code!\nPlease provide your code input. " + codeFormat);
+          message.error("Empty code!\nDefault code content has been filled in the code panel.");
+          this.editor.mappingSpec.code = this.editor.mappingSpec.codePref + "[\n  // Please write the specification here\n];"
           return false;
         };
         code += this.editor.mappingSpec.codeSuff;

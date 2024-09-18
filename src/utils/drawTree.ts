@@ -772,7 +772,7 @@ export class TreeChart {
           .on('mouseout', (_e: any, d: NodeData) => {
             if (tableStore.spec.constrNodeRectClickId !== constrId)
               constrNodeRect.attr('visibility', 'hidden');
-            tableStore.hightlightViewsAfterClickNode();
+            tableStore.highlightViewsAfterClickNode();
           })
           .on('contextmenu', declareContextMenu.bind(null, tableStore, node, i))  // bind 第一个参数为 this，这种情况下最后一个参数为 event
           .on('click', (_e: any, d: NodeData) => {
@@ -784,7 +784,7 @@ export class TreeChart {
               tableStore.tree.clickNode = d;
               tableStore.tree.clickConstrIndex = i;
               constrNodeRect.attr('visibility', 'visible');
-              tableStore.hightlightViewsAfterClickNode();
+              tableStore.highlightViewsAfterClickNode();
 
               tableStore.editor.mappingSpec.highlightCode = [...tableStore.getHighlightCodeStartEndLine(constraint, subTemplate), 'selectionShallow'];
               tableStore.editor.mappingSpec.triggerCodeChange = false;
@@ -887,7 +887,7 @@ export class TreeChart {
         if (node.id) tableStore.highlightTblTemplate(node.data.currentMatchs!);
       })
       .on('mouseout', function () {
-        tableStore.hightlightViewsAfterClickNode();
+        tableStore.highlightViewsAfterClickNode();
       })
       .on('click', function (event, d) {
         event.stopPropagation();
@@ -900,7 +900,7 @@ export class TreeChart {
           tableStore.spec.selectNode = d;
           tableStore.tree.clickNode = d;
           tableStore.tree.clickConstrIndex === -1;
-          tableStore.hightlightViewsAfterClickNode();
+          tableStore.highlightViewsAfterClickNode();
           d3.select(this).classed('selection', true);
           const visData = d.data;
           // tableStore.goToInstance(0);  // 默认选择第一个节点
