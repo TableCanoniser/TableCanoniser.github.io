@@ -87,6 +87,7 @@ export const drawTblTemplate = (container: SVGSVGElement | null, tableStore: Tab
                     // .attr('fill', '#f9f7ff')
                     // .attr('stroke', '#cccccc')
                     .attr('stroke-width', 1);
+                d3.select('.tbl-container .tbl-template-highlight').raise();
             })
             .on('click', function (event, d: TblCell) {
                 // tableStore.grid_cell_click({ row: d.row + visChildren[0].y, col: d.col + visChildren[0].x });

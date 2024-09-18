@@ -101,7 +101,7 @@ function updateColInfoFn(tbl: "input_tbl" | "output_tbl") {
     const tblData = tableStore.input_tbl.tbl;
     drawMinimap(tblData.length, tblData[0].length, document.querySelector('svg.tbl-container') as SVGSVGElement, tableStore);
     tableStore.optimizeMiniTempDistance();
-    tableStore.clearStatus("miniHighlight");
+    // tableStore.clearStatus("miniHighlight");
     tableStore.initTblInfo(false);
     // tableStore.computeColInfo("output_tbl");
     tableStore.output_tbl.colInfo = [];
@@ -311,7 +311,7 @@ function initEventsForTbl(tbl: "input_tbl" | "output_tbl") {
     // 修改单元格内容后的回调
     if (changes && changes.some(ci => ci[2] !== ci[3])) {
       if (tbl === "input_tbl") {
-        tableStore.clearStatus("miniHighlight");
+        // tableStore.clearStatus("miniHighlight");
         tableStore.initTblInfo(false);
         tableStore.computeColInfo("output_tbl");
         tableStore.spec.matchedInstNum = 0;

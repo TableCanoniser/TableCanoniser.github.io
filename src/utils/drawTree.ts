@@ -655,6 +655,7 @@ export class TreeChart {
 
       if (node.data.id === 1) {
         tableStore.spec.selectNode = node  // 默认选中第一个节点
+        tableStore.tree.clickNode = node  // 默认选中第一个节点
         if (document.body.style.cursor !== 'cell') {
           tableStore.goToInstance(0);
         }
@@ -752,15 +753,6 @@ export class TreeChart {
             // console.log('mouseover', d);
             try {
               constrNodeRect.attr('visibility', 'visible');
-              // let cellInfo;
-              // if (d.data.path?.length === 1) {
-              //   cellInfo = d.data.constrsInfo![i][tableStore.tree.instanceIndex]
-              //   constrIndex = tableStore.tree.instanceIndex
-              // } else {
-              //   cellInfo = d.data.constrsInfo![i].map((ele, index) => ({ ele, index })).filter((info) => info.ele.isDefinedFromSpec)[tableStore.tree.instanceIndex];
-              //   constrIndex = cellInfo.index;
-              //   cellInfo = cellInfo.ele;
-              // }
               let cellInfo = d.data.constrsInfo![i].map((ele, index) => ({ ele, index })).filter(info => info.ele.instIndex === tableStore.tree.instanceIndex);
               if (cellInfo === undefined) return;
               tableStore.highlightTblTemplate(cellInfo.map((info) => {
@@ -780,7 +772,7 @@ export class TreeChart {
           .on('mouseout', (_e: any, d: NodeData) => {
             if (tableStore.spec.constrNodeRectClickId !== constrId)
               constrNodeRect.attr('visibility', 'hidden');
-            d3.select('.tbl-container .tbl-template-highlight').selectAll('rect').remove();
+            tableStore.hightlightViewsAfterClickNode();
           })
           .on('contextmenu', declareContextMenu.bind(null, tableStore, node, i))  // bind 第一个参数为 this，这种情况下最后一个参数为 event
           .on('click', (_e: any, d: NodeData) => {
@@ -789,7 +781,10 @@ export class TreeChart {
               document.dispatchEvent(escapeEvent);
 
               tableStore.spec.constrNodeRectClickId = constrId;
+              tableStore.tree.clickNode = d;
+              tableStore.tree.clickConstrIndex = i;
               constrNodeRect.attr('visibility', 'visible');
+              tableStore.hightlightViewsAfterClickNode();
 
               tableStore.editor.mappingSpec.highlightCode = [...tableStore.getHighlightCodeStartEndLine(constraint, subTemplate), 'selectionShallow'];
               tableStore.editor.mappingSpec.triggerCodeChange = false;
@@ -801,20 +796,6 @@ export class TreeChart {
               } else {
                 tableStore.editor.mappingSpec.code = newCode;
               }
-
-              const cellInfoSelections = d.data.constrsInfo![i].map((cellInfo) => [cellInfo.y, cellInfo.x, cellInfo.y, cellInfo.x] as Selection);
-              const classNames = Array(cellInfoSelections.length).fill("selectionShallow");
-              const cells = tableStore.generateHighlightCells(cellInfoSelections, classNames);
-              let { row, col } = cells.slice(-1)[0];
-              if (constrIndex < classNames.length) {
-                // classNames[tableStore.tree.instanceIndex] = 'selection';
-                cells[constrIndex].className = 'selection';
-                row = cells[constrIndex].row;
-                col = cells[constrIndex].col;
-              }
-              tableStore.highlightTblCells("input_tbl", cells, [[row, col]]);
-              tableStore.highlightMinimapCells(cells);
-              // console.timeEnd('constraint click');
             } catch (e) {
               console.log('Constraint click error: \n', e)
             }
@@ -902,10 +883,11 @@ export class TreeChart {
       })
       .on('mouseover', function (event, node) {  // 只有 function 才有 this，箭头函数的 this 是定义时的上下文
         // console.log('mouseover', node);  // event: any, node: any
+        // console.log('mouseover', tableStore.tree.clickConstrIndex);
         if (node.id) tableStore.highlightTblTemplate(node.data.currentMatchs!);
       })
       .on('mouseout', function () {
-        d3.select('.tbl-container .tbl-template-highlight').selectAll('rect').remove();
+        tableStore.hightlightViewsAfterClickNode();
       })
       .on('click', function (event, d) {
         event.stopPropagation();
@@ -916,15 +898,13 @@ export class TreeChart {
           // tableStore.stringifySpec();
           // if (tableStore.spec.selectNode === null || tableStore.spec.selectNode.data.id !== node.data.id) {}
           tableStore.spec.selectNode = d;
-          // tableStore.tree.instanceIndex = 0;
+          tableStore.tree.clickNode = d;
+          tableStore.tree.clickConstrIndex === -1;
+          tableStore.hightlightViewsAfterClickNode();
           d3.select(this).classed('selection', true);
-
-          tableStore.highlightMinimapInsts();
-
-          // console.log(event, d);
-          // [startRow, startCol, endRow, endCol]
           const visData = d.data;
-          tableStore.goToInstance(0);  // 默认选择第一个节点
+          // tableStore.goToInstance(0);  // 默认选择第一个节点
+
 
           /************** 与 monaco editor 交互 ***************/
           const subTemplate = tableStore.getNodebyPath(tableStore.spec.rawSpecs, visData.path!);

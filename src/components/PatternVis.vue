@@ -337,6 +337,7 @@ watch(() => tableStore.editor.mappingSpec.code, (newVal) => {
 watch(() => tableStore.tree.instanceIndex, () => {
     drawTblTemplate(tblContainer.value, tableStore);
     tableStore.updateCurve();
+    tableStore.highlightTblPatternConstr();
 });
 
 import { drawMinimap, miniZoom } from '@/utils/minimap';

@@ -163,7 +163,7 @@ function handleKeydown(event: KeyboardEvent) {
 
     tableStore.clearStatus("tree");
     tableStore.clearStatus("matchArea");
-    tableStore.clearStatus("miniHighlight");
+    // tableStore.clearStatus("miniHighlight");
 
   }
 }

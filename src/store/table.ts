@@ -209,6 +209,8 @@ export const useTableStore = defineStore('table', {
       tree: {
         contextMenuVisible: false,
         instanceIndex: -1,
+        clickNode: shallowRef<NodeData | null>(null),
+        clickConstrIndex: -1,
         offset: {
           left: { x: 0, y: 0 },
           right: { x: 0, y: 0 }
@@ -483,9 +485,10 @@ export const useTableStore = defineStore('table', {
         message.error(`The input number is out of range: [1, ${maxInst}]`);
         return;
       }
+      // instanceIndex 的变化会触发drawTblTemplate等事件
       this.tree.instanceIndex = instance;
       this.updateVisTreeAreaBox();
-      this.hightlightViewsAfterClickNode(this.spec.selectNode!.data);
+      this.hightlightViewsAfterClickNode();
 
       if (this.tree.minimapInstHighlight && this.tree.minimapInstHighlight.selectAll('rect').size() === 0) {
         this.highlightMinimapInsts();
@@ -495,8 +498,7 @@ export const useTableStore = defineStore('table', {
       hightlight.selectAll('rect').attr('stroke', 'none');
       hightlight.select(`rect:nth-child(${this.tree.instanceIndex + 1})`).attr('stroke', typeMapColor.selection);
 
-      this.updateCurve();
-
+      // this.updateCurve();
     },
     highlightMinimapInsts() {
       const hightlight = this.tree.minimapInstHighlight!;
@@ -739,37 +741,80 @@ export const useTableStore = defineStore('table', {
       });
     },
 
+    hightlightViewsAfterClickNode() {
+      const clickNode = this.tree.clickNode;
+      const nodeConstrId = this.tree.clickConstrIndex;
+      d3.select('.tbl-container .tbl-template-highlight').selectAll('rect').remove();
+      if (clickNode !== null) {
+        const visData = clickNode.data
+        if (nodeConstrId === -1) {  // 点击的是 node
+          // 绘制矩阵里的高亮
+          this.highlightTblTemplate(visData.currentMatchs!);
+
+          const matchArea: Array<[number, number, number, number]> = [];
+          visData.matchs?.forEach((match) => {
+            const { x, y, width, height } = match;
+            matchArea.push([y, x, y + height - 1, x + width - 1]);
+          })
+          let allHightedInCells: TblCell[] = [];
+          let allHightedOutCells: TblCell[] = [];
+          if (matchArea.length > 0) {
+            const { selectedCoords, hightedCells } = this.getHightlightedCells(matchArea, `${visData.type}Shallow`);
+            allHightedInCells = allHightedInCells.concat(hightedCells);
+            const cells = this.in_out_mapping(selectedCoords, "input_tbl", `${visData.type}Shallow`);
+            allHightedOutCells = allHightedOutCells.concat(cells);
+            this.highlightMinimapCells(hightedCells);
+          }
+
+          const selected: Array<[number, number, number, number]> = [[visData.y, visData.x, visData.y + visData.height - 1, visData.x + visData.width - 1]];
+          const { selectedCoords, hightedCells } = this.getHightlightedCells(selected, visData.type!);
+          allHightedInCells = allHightedInCells.concat(hightedCells);
+          // 绘制输入表高亮
+          this.highlightTblCells("input_tbl", allHightedInCells, Object.values(selectedCoords)[0]);
+          const cells = this.in_out_mapping(selectedCoords, "input_tbl", visData.type);
+          allHightedOutCells = allHightedOutCells.concat(cells);
+          const coordsOut = cells.map((c) => [c.row, c.col] as [number, number]);
+          // 绘制输出表高亮
+          this.highlightTblCells("output_tbl", allHightedOutCells, coordsOut);
+          // 绘制Minimap高亮
+          this.highlightMinimapCells(hightedCells, matchArea.length === 0);
+          // 在 D3.js 中，使用 .classed() 方法为元素添加类时，如果一个元素同时拥有多个类，CSS 样式的优先级依赖于 CSS 样式表中的定义顺序，而不是你通过 D3.js 添加类的顺序。
+
+          this.input_tbl.instance.deselectCell();
+          this.output_tbl.instance.deselectCell();
 
 
-    hightlightViewsAfterClickNode(visData: VisTreeNode) {
-      const matchArea: Array<[number, number, number, number]> = [];
-      visData.matchs?.forEach((match) => {
-        const { x, y, width, height } = match;
-        matchArea.push([y, x, y + height - 1, x + width - 1]);
-      })
-      let allHightedInCells: TblCell[] = [];
-      let allHightedOutCells: TblCell[] = [];
-      if (matchArea.length > 0) {
-        const { selectedCoords, hightedCells } = this.getHightlightedCells(matchArea, `${visData.type}Shallow`);
-        allHightedInCells = allHightedInCells.concat(hightedCells);
-        const cells = this.in_out_mapping(selectedCoords, "input_tbl", `${visData.type}Shallow`);
-        allHightedOutCells = allHightedOutCells.concat(cells);
-        this.highlightMinimapCells(hightedCells);
+        } else { // 点击的事 Constraints
+          // 绘制矩阵里的高亮
+          let constrIndex = 0;
+          const cellInfo = visData.constrsInfo![nodeConstrId].map((ele, index) => ({ ele, index })).filter(info => info.ele.instIndex === this.tree.instanceIndex);
+          if (cellInfo === undefined) return;
+          this.highlightTblTemplate(cellInfo.map((info) => {
+            if (info.ele.isDefinedFromSpec) constrIndex = info.index;
+            return {
+              x: info.ele.x,
+              y: info.ele.y,
+              width: 1,
+              height: 1,
+              isDefinedFromSpec: info.ele.isDefinedFromSpec
+            }
+          }));
+
+          // 高亮Input table中的cells
+          const cellInfoSelections = visData.constrsInfo![nodeConstrId].map((cellInfo) => [cellInfo.y, cellInfo.x, cellInfo.y, cellInfo.x] as Selection);
+          const classNames = Array(cellInfoSelections.length).fill("selectionShallow");
+          const cells = this.generateHighlightCells(cellInfoSelections, classNames);
+          let { row, col } = cells.slice(-1)[0];
+          if (constrIndex < classNames.length) {
+            // classNames[tableStore.tree.instanceIndex] = 'selection';
+            cells[constrIndex].className = 'selection';
+            row = cells[constrIndex].row;
+            col = cells[constrIndex].col;
+          }
+          this.highlightTblCells("input_tbl", cells, [[row, col]]);
+          this.highlightMinimapCells(cells);
+        }
       }
-
-      const selected: Array<[number, number, number, number]> = [[visData.y, visData.x, visData.y + visData.height - 1, visData.x + visData.width - 1]];
-      const { selectedCoords, hightedCells } = this.getHightlightedCells(selected, visData.type!);
-      allHightedInCells = allHightedInCells.concat(hightedCells);
-      this.highlightTblCells("input_tbl", allHightedInCells, Object.values(selectedCoords)[0]);
-      const cells = this.in_out_mapping(selectedCoords, "input_tbl", visData.type);
-      allHightedOutCells = allHightedOutCells.concat(cells);
-      const coordsOut = cells.map((c) => [c.row, c.col] as [number, number]);
-      this.highlightTblCells("output_tbl", allHightedOutCells, coordsOut);
-      this.highlightMinimapCells(hightedCells, matchArea.length === 0);
-      // 在 D3.js 中，使用 .classed() 方法为元素添加类时，如果一个元素同时拥有多个类，CSS 样式的优先级依赖于 CSS 样式表中的定义顺序，而不是你通过 D3.js 添加类的顺序。
-
-      this.input_tbl.instance.deselectCell();
-      this.output_tbl.instance.deselectCell();
     },
 
     in_out_mapping(selectedCoords: { [key: string]: [number, number][] }, type: "input_tbl" | "output_tbl", className: string = "selection") {
@@ -1001,6 +1046,28 @@ export const useTableStore = defineStore('table', {
         });
       } catch (e) {
         console.log(e);
+      }
+    },
+
+    highlightTblPatternConstr() {
+      const clickNode = this.tree.clickNode;
+      const nodeConstrId = this.tree.clickConstrIndex;
+      if (clickNode !== null) {
+        if (nodeConstrId === -1) {
+          this.highlightTblTemplate(clickNode.data.currentMatchs!);
+        } else {
+          const cellInfo = clickNode.data.constrsInfo![nodeConstrId].map((ele, index) => ({ ele, index })).filter(info => info.ele.instIndex === this.tree.instanceIndex);
+          if (cellInfo === undefined) return;
+          this.highlightTblTemplate(cellInfo.map((info) => {
+            return {
+              x: info.ele.x,
+              y: info.ele.y,
+              width: 1,
+              height: 1,
+              isDefinedFromSpec: info.ele.isDefinedFromSpec
+            }
+          }));
+        }
       }
     },
 
@@ -1732,13 +1799,16 @@ export const useTableStore = defineStore('table', {
           });
           */
           this.spec.constrNodeRectClickId = '';
+          this.tree.clickNode = null;
+          this.tree.clickConstrIndex = -1;
+          d3.select('.tbl-container .tbl-template-highlight').selectAll('rect').remove();
           d3.selectAll('.type-node').classed('selection', false);
           d3.selectAll('.node-constraint-rect').attr('visibility', 'hidden');
           break;
         case "miniHighlight":
-          this.tree.minimapInstHighlight!.selectAll('rect').remove();
-          d3.select('path.top-line').attr("d", "");
-          d3.select('path.bottom-line').attr("d", "");
+          // this.tree.minimapInstHighlight!.selectAll('rect').remove();
+          // d3.select('path.top-line').attr("d", "");
+          // d3.select('path.bottom-line').attr("d", "");
           break
       }
     },
