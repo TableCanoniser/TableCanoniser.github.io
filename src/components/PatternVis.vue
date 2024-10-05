@@ -2,9 +2,9 @@
     <div class="view"> <!-- style="flex: 4.5" -->
         <div class="view-title">
             <a-flex justify="space-between" align="center">
-                <span style="font-size: 18px; font-weight: bold;">Mapping Patterns</span>
+                <span style="font-size: 18px; font-weight: bold;">{{ langConfig[lang].pattern.patterns }}</span>
                 <span>
-                    <span>Current instance:</span>
+                    <span>{{ langConfig[lang].pattern.currentInst }}</span>
                     <a-input-number class="goToInstance" :value="tableStore.tree.instanceIndex" :defaultValue="-1"
                         :disabled="tableStore.spec.matchedInstNum === 0"
                         @pressEnter="tableStore.goToInstance(+$event.target.value - 1)" size="small" :precision="0"
@@ -14,26 +14,29 @@
                         }}]</span>
                 </span>
                 <span style="font-size: 15px; height: 25px">
-                    <span>Match:</span>
+                    <span>{{ langConfig[lang].pattern.match }}</span>
                     <a-button-group style="margin: 0 15px 0 6px">
                         <a-button class="legend legend-null" size="small" @click="selectMatchExtractArea('null')"
-                            title="Click to select a starting area in the input table. Press 'Esc' to cancel the selection mode.">Region</a-button>
+                            :title="langConfig[lang].pattern.regionTitle">{{ langConfig[lang].pattern.region
+                            }}</a-button>
                     </a-button-group>
-                    <span>Extract by:</span>
+                    <span>{{ langConfig[lang].pattern.extract }}</span>
                     <a-button-group style="margin-left: 6px">
                         <a-button class="legend legend-position" size="small"
-                            @click="selectMatchExtractArea('position')"
-                            title="Click to select a starting area in the input table for matching and extracting by position. Press 'Esc' to cancel the selection mode.">Position</a-button>
+                            :title="langConfig[lang].pattern.positionTitle">{{ langConfig[lang].pattern.position
+                            }}</a-button>
                         <a-button class="legend legend-context" size="small" @click="selectMatchExtractArea('context')"
-                            title="Click to select a starting area in the input table for matching and extracting by context. Press 'Esc' to cancel the selection mode.">Context</a-button>
+                            :title="langConfig[lang].pattern.contextTitle">{{ langConfig[lang].pattern.context
+                            }}</a-button>
                         <a-button class="legend legend-value" size="small" @click="selectMatchExtractArea('value')"
-                            title="Click to select a starting area in the input table for matching and extracting by value. Press 'Esc' to cancel the selection mode.">Value</a-button>
+                            :title="langConfig[lang].pattern.valueTitle">{{ langConfig[lang].pattern.value
+                            }}</a-button>
                     </a-button-group>
                 </span>
                 <span style="margin-right: 10px">
                     <a-button id="draw_tree" size="small" @click="resetZoom">
                         <v-icon name="bi-arrow-clockwise" scale="0.9"></v-icon>
-                        <span>Reset View</span>
+                        <span>{{ langConfig[lang].pattern.reset }}</span>
                     </a-button>
                 </span>
             </a-flex>
@@ -69,6 +72,8 @@ import { useTableStore } from "@/store/table";
 import * as d3 from 'd3';
 import { TypeColor } from '@/utils/style';
 const tableStore = useTableStore();
+
+import { lang, langConfig } from "@/utils/lang";
 
 /*
 interface TreeNode {
@@ -114,7 +119,7 @@ const closeContextMenu = (e: any) => {
     const visNode = tableStore.spec.selectNode!.data;
     let extract: any = null, extractColor: string = '';
     let triggerCellCursorFlag = false;
-    let messageInfo = "\n Press ESC to cancel the selection mode.";
+    let messageInfo = "\n" + langConfig[lang].pattern.selectionMode;
     const maxCNum = tableStore.findMaxCNumber() + 1;
     switch (e.key) {
         case "0":
@@ -124,7 +129,7 @@ const closeContextMenu = (e: any) => {
             break;
         case "1":
             // Add Constraints Logic
-            messageInfo = "Please select the constrained cell in the input table." + messageInfo;
+            messageInfo = langConfig[lang].pattern.addConstr + messageInfo;
             triggerCellCursorFlag = true;
             break;
         case "2-0":
@@ -165,7 +170,7 @@ const closeContextMenu = (e: any) => {
         case "3-2":
         case "3-3":
             // Add Sub-Template Logic
-            messageInfo = "Please select an area in the input table." + messageInfo;
+            messageInfo = langConfig[lang].pattern.addSubPattern + messageInfo;
             triggerCellCursorFlag = true;
             break;
         case "4":
@@ -302,10 +307,10 @@ function handleCodeChange(clickFlag = false) {
     if (!transformRes) return;
 
     if (tableStore.spec.matchedInstNum === 0) {
-        instanceContent.value = 'No matched instance';
+        instanceContent.value = langConfig[lang].tree.noMatch;
         tableStore.tree.instanceIndex = -1;
     } else {
-        instanceContent.value = 'Total ' + tableStore.spec.matchedInstNum + ' instance(s)';
+        instanceContent.value = lang === 'en' ? 'Total ' + tableStore.spec.matchedInstNum + ' instance(s)' : '总共匹配了' + tableStore.spec.matchedInstNum + '个实例';
     }
     tableStore.computeColInfo("output_tbl");
     drawTree(tableStore.spec.visTree); // 会默认选择第一个节点
@@ -363,8 +368,8 @@ watch(() => tableStore.input_tbl.tbl, (newVal) => {
 
 
 onMounted(() => {
-    document.querySelector('span.ant-input-number-handler-up')!.setAttribute("title", "Previous instance")
-    document.querySelector('span.ant-input-number-handler-down')!.setAttribute("title", "Next instance")
+    document.querySelector('span.ant-input-number-handler-up')!.setAttribute("title", langConfig[lang].pattern.previousInst);
+    document.querySelector('span.ant-input-number-handler-down')!.setAttribute("title", langConfig[lang].pattern.nextInst)
 });
 
 

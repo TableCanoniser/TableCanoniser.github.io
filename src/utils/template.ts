@@ -1,6 +1,7 @@
 import { TableStore, TblCell } from "@/store/table";
 import { TypeColor, typeMapColor } from "./style";
 import * as d3 from 'd3';
+import { lang, langConfig } from "@/utils/lang";
 
 export let tempZoom: d3.ZoomBehavior<SVGSVGElement, unknown> | null = null;
 
@@ -100,7 +101,7 @@ export const drawTblTemplate = (container: SVGSVGElement | null, tableStore: Tab
             })
             .append('title').text(d => {
                 if (d.text && d.text.length) {
-                    return "The cell's Target Column is:\n" + d.text.toString();
+                    return langConfig[lang].others.targetCol + "\n" + d.text.toString();
                     /*
                     if (d.bgColor === typeMapColor.position || d.bgColor === typeMapColor.positionShallow) {
                         return "The cell's Target Column is:\n" + d.text.toString();
@@ -108,7 +109,7 @@ export const drawTblTemplate = (container: SVGSVGElement | null, tableStore: Tab
                         return "The cell's Target Column may be:\n" + d.text.toString();
                     }*/
                 } else {
-                    return "No Target Column";
+                    return langConfig[lang].others.noTargetCol;
                 }
             });
 

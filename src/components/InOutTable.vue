@@ -1,7 +1,7 @@
 <template>
   <div class="view">
     <div class="view-title">
-      <span class="head-text">Input Table</span>
+      <span class="head-text">{{ langConfig[lang].table.input }}</span>
       <span style="float: right; margin-right: 10px">
         <a-upload v-model:file-list="fileList" :max-count="1" accept=".csv, .txt, .xls, .xlsx"
           :customRequest="handleUpload" @remove="handleRemove" @preview="handlePreview" :showUploadList="{
@@ -9,12 +9,12 @@
           }">
           <a-button size="small">
             <v-icon name="bi-upload" scale="0.85" />
-            <span>Upload</span>
+            <span>{{ langConfig[lang].table.upload }}</span>
           </a-button>
         </a-upload>
         <a-button style="margin-left: 5px;" size="small" @click="resetData">
           <v-icon name="bi-arrow-clockwise" scale="0.9"></v-icon>
-          <span>Reset Data</span>
+          <span>{{ langConfig[lang].table.reset }}</span>
         </a-button>
       </span>
     </div>
@@ -30,11 +30,11 @@
   <div class="divider-w" @mousedown="getNeighborEls($event, 'width')" title="Drag to resize"></div>
   <div class="view">
     <div class="view-title">
-      <span>Output Table</span>
+      <span>{{ langConfig[lang].table.output }}</span>
       <span style="float: right; margin-right: 10px">
         <a-button size="small" @click="handleDownload">
           <v-icon name="bi-download" scale="0.85"></v-icon>
-          <span>Download</span>
+          <span>{{ langConfig[lang].table.download }}</span>
         </a-button>
       </span>
     </div>
@@ -68,6 +68,8 @@ import * as XLSX from 'xlsx';  // parse excel data
 import { Table2D, TableCanoniserTemplate } from "@/table-canoniser/dist/grammar"
 import { message } from "ant-design-vue";
 import { getNeighborEls } from '@/utils/dragLayout';
+
+import { lang, langConfig } from "@/utils/lang";
 
 // import { ArrowUpTrayIcon } from '@heroicons/vue/24/solid'
 

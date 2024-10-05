@@ -7,7 +7,7 @@
                     class="icon-column">
                     <img v-for="icon in colInfo.sortedIcons" :key="icon.type" :src="icons[icon.type]"
                         :alt="`${icon.type} icon`" class="icon"
-                        :title="`${icon.count} cell(s) with a data type of ${icon.type}`"
+                        :title="`${icon.count} ${langConfig[lang].others.colType} ${langConfig[lang].others[icon.type]}`"
                         @click="handleIconClick(colInfo.index, colInfo[icon.type])" />
                 </div>
             </div>
@@ -22,6 +22,7 @@ import numberIcon from '@/assets/number.png';
 import nullIcon from '@/assets/minus.png';
 
 import { useTableStore } from "@/store/table";
+import { lang, langConfig } from "@/utils/lang";
 // const { colInfos } = defineProps<{ colInfos: ColInfo[] }>();
 const { tblType } = defineProps<{ tblType: "input_tbl" | "output_tbl" }>();  // | "transformScript"
 

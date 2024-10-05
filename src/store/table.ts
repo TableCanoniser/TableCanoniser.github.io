@@ -13,6 +13,8 @@ import * as monaco from "monaco-editor";
 import * as ts from "typescript";
 import { typeMapColor, TypeColor } from '@/utils/style';
 
+import { lang, langConfig } from "@/utils/lang";
+
 function replaceEvenSpaces(str: string) {
   // 使用正则表达式匹配连续的空格
   return str.replace(/ {2,}/g, (match) => {
@@ -232,72 +234,72 @@ export const useTableStore = defineStore('table', {
           // }, 
           {
             key: "3",
-            label: "Add Sub-Pattern",
-            title: "Add Sub-Pattern",
+            label: langConfig[lang].store.menu.addPattern,
+            title: langConfig[lang].store.menu.addPattern,
             children: [{
               key: "3-0",
-              label: "Position",
-              title: "Match and Extract by Position",
+              label: langConfig[lang].store.menu.position,
+              title: langConfig[lang].store.menu.positionTitle,
               // class: "legend-position",
               style: { color: typeMapColor['position'] },  // 使用 style 设置样式
             }, {
               key: "3-1",
-              label: "Context",
-              title: "Match and Extract by Context",
+              label: langConfig[lang].store.menu.context,
+              title: langConfig[lang].store.menu.contextTitle,
               style: { color: typeMapColor['context'] },
             }, {
               key: "3-2",
-              label: "Value",
-              title: "Match and Extract by Value",
+              label: langConfig[lang].store.menu.value,
+              title: langConfig[lang].store.menu.valueTitle,
               style: { color: typeMapColor['value'] },
             }, {
               key: "3-3",
-              label: "Region",
-              title: "Match Without Extraction",
+              label: langConfig[lang].store.menu.region,
+              title: langConfig[lang].store.menu.regionTitle,
               style: { color: typeMapColor['null'] },
             }],
           }, {
             key: "1",
-            label: "Add Constraint",
-            title: "Add Constraint",
+            label: langConfig[lang].store.menu.addConstr,
+            title: langConfig[lang].store.menu.addConstr,
             // icon: () => h(MailOutlined),
             // disabled: true
           }, {
             key: "2",
-            label: "Reset Target Cols",
-            title: "Reset Target Cols",
+            label: langConfig[lang].store.menu.resetCol,
+            title: langConfig[lang].store.menu.resetColTitle,
             children: [{
               key: "2-0",
-              label: "Position",
-              title: "Match and Extract by Position",
+              label: langConfig[lang].store.menu.position,
+              title: langConfig[lang].store.menu.positionTitle,
               // class: "legend-position",
               style: { color: typeMapColor['position'] },  // 使用 style 设置样式
             }, {
               key: "2-1",
-              label: "Context",
-              title: "Match and Extract by Context",
+              label: langConfig[lang].store.menu.context,
+              title: langConfig[lang].store.menu.contextTitle,
               style: { color: typeMapColor['context'] },
             }, {
               key: "2-2",
-              label: "Value",
-              title: "Match and Extract by Value",
+              label: langConfig[lang].store.menu.value,
+              title: langConfig[lang].store.menu.valueTitle,
               style: { color: typeMapColor['value'] },
             }, {
               key: "2-3",
-              label: "Region",
-              title: "Match Without Extraction",
+              label: langConfig[lang].store.menu.region,
+              title: langConfig[lang].store.menu.regionTitle,
               style: { color: typeMapColor['null'] },
             }],
           }, {
             key: "4",
-            label: "Delete This Pattern",
-            title: "Delete This Pattern.\nShortcut: Delete/Backspace",
+            label: langConfig[lang].store.menu.deletePattern,
+            title: langConfig[lang].store.menu.deletePatternTitle,
             // disabled: true
             // icon: () => h(MailOutlined),
           }, {
             key: "5",
-            label: "Delete Constraint",
-            title: "Delete Constraint.\nShortcut: Delete/Backspace",
+            label: langConfig[lang].store.menu.deleteConstr,
+            title: langConfig[lang].store.menu.deleteConstrTitle,
           }],
         menuList: [] as Array<{ [key: string]: any }>,
       }
@@ -533,7 +535,7 @@ export const useTableStore = defineStore('table', {
           // tableStore.goToInstance(d.index - tableStore.tree.instanceIndex);
           tableStore.goToInstance(d.index);
         })
-        .append('svg:title').text((d, i) => `The ${tableStore.numberToOrdinal(i + 1)} instance.\nArea Box:\n · x: ${d.x}\n · y: ${d.y}\n · width: ${d.width}\n · height: ${d.height}`);
+        .append('svg:title').text((d, i) => lang === 'en' ? `The ${tableStore.numberToOrdinal(i + 1)} instance.\nArea Box:\n · x: ${d.x}\n · y: ${d.y}\n · width: ${d.width}\n · height: ${d.height}` : `第${i + 1}个实例。\n区域网格信息：\n · x：${d.x}\n · y：${d.y}\n · 宽：${d.width}\n · 高：${d.height}`);
     },
 
     optimizeMiniTempDistance(maxDistance: number = 120) {
@@ -1224,7 +1226,7 @@ export const useTableStore = defineStore('table', {
         if (e.message.includes("option")) {
           message.error(e + "\n" + codeFormat);
         }
-        else message.error(`Failed to parse the specification:\n ${e}`);
+        else message.error(`${langConfig[lang].store.failedParse}\n ${e}`);
         return false;
       }
     },
@@ -1269,7 +1271,7 @@ export const useTableStore = defineStore('table', {
     transformTablebyCode() {
       if (this.editor.mappingSpec.errorMark !== null) {
         const marker = this.editor.mappingSpec.errorMark;
-        message.error(`Invalid syntax at Line ${marker.startLineNumber}, Column ${marker.startColumn}:\n ${marker.message}`);
+        message.error(lang === 'en' ? `Invalid syntax at Line ${marker.startLineNumber}, Column ${marker.startColumn}:\n ${marker.message}` : `语法错误（第${marker.startLineNumber}行，第${marker.startColumn}列）：\n${marker.message}`);
         return false;
       }
       let messageContent = ''
@@ -1289,20 +1291,20 @@ export const useTableStore = defineStore('table', {
           }
           if (spec.matchs) {
             if (spec.matchs.length > 1) {
-              messageContent += `For the ${this.numberToOrdinal(index + 1)} template, ${spec.matchs.length} instances are matched.`
+              messageContent += `${langConfig[lang].store.for} ${this.numberToOrdinal(index + 1)} ${langConfig[lang].store.template} ${spec.matchs.length} ${langConfig[lang].store.matched}`
             } else if (spec.matchs.length === 1) {
-              messageContent += `For the ${this.numberToOrdinal(index + 1)} template, only one instance is matched.`
+              messageContent += `${langConfig[lang].store.for} ${this.numberToOrdinal(index + 1)} ${langConfig[lang].store.template} ${langConfig[lang].store.oneMatch}`
             } else {
-              messageContent += `For the ${this.numberToOrdinal(index + 1)} template, no instance is matched.`
+              messageContent += `${langConfig[lang].store.for} ${this.numberToOrdinal(index + 1)} ${langConfig[lang].store.template} ${langConfig[lang].store.noMatch}`
             }
           } else {
-            messageContent += `For the ${this.numberToOrdinal(index + 1)} template, no instance is matched.`
+            messageContent += `${langConfig[lang].store.for} ${this.numberToOrdinal(index + 1)} ${langConfig[lang].store.template} ${langConfig[lang].store.noMatch}`
           }
         })
 
         if (Object.keys(tidyData).length === 0) {
           if (messageContent) messageContent += '\n';
-          messageContent += 'The output table is empty based on the specification.';
+          messageContent += langConfig[lang].store.emptyTable;
           // this.tree.instanceIndex = -1;
           // return;
         }
@@ -1320,9 +1322,9 @@ export const useTableStore = defineStore('table', {
         return true
       } catch (e) {
         if (e instanceof CustomError) {
-          messageContent = `Failed to transform the table based on the specification:\n ${e}`
+          messageContent = `${langConfig[lang].store.failedTransform}\n ${e}`
         } else {
-          messageContent = `Failed to parse the specification:\n ${e}`
+          messageContent = `${langConfig[lang].store.failedParse}\n ${e}`
         }
         message.error(messageContent);
         console.error(e);
@@ -1609,7 +1611,7 @@ export const useTableStore = defineStore('table', {
       } else {
         const currentSpec = this.getNodebyPath(this.spec.rawSpecs, visNode.path!);
         if (currentSpec === null) {
-          message.error("The node path is invalid");
+          message.error(langConfig[lang].store.invalidPath);
           return;
         }
         switch (property) {

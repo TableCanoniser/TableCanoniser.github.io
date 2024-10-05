@@ -3,7 +3,7 @@
     <div class="system-name">
       <span id="system_name">TableCanoniser</span>
       <span style="left: 20px; position: absolute;">
-        <span style="font-size: 16px; font-weight: normal; margin-right: 5px">Cases:</span>
+        <span style="font-size: 16px; font-weight: normal; margin-right: 5px">{{ langConfig[lang].panel.case }}</span>
         <a-select :value="currentCase" :options="caseOption" size="small" @change="handleCaseChange"
           @mouseenter="selectEnter" @mouseleave="selectLeave" :open="isDropdownOpen" style="width: 137px;"></a-select>
       </span>
@@ -11,11 +11,11 @@
         <a-button-group>
           <a-button size="small" @click="undo" :disabled="undoFlag">
             <v-icon name="io-arrow-undo-outline" scale="0.9"></v-icon>
-            <span style="margin-left: 5px">Undo</span>
+            <span style="margin-left: 5px">{{ langConfig[lang].panel.undo }}</span>
           </a-button>
           <a-button size="small" @click="redo" :disabled="redoFlag">
             <v-icon name="io-arrow-redo-outline" scale="0.9"></v-icon>
-            <span style="margin-left: 5px">Redo</span>
+            <span style="margin-left: 5px">{{ langConfig[lang].panel.redo }}</span>
           </a-button>
         </a-button-group>
       </span>
@@ -40,28 +40,27 @@
                 <!-- <a-switch v-model:checked="tableStore.editor.mappingSpec.autoRun" size="small" checked-children="On"
                   un-checked-children="Off"
                   title="Set whether to automatically run the mapping specification after changing code" /> -->
-                <span title="Set whether to automatically run code upon changes">
-                  <a-checkbox v-model:checked="tableStore.editor.mappingSpec.autoRun">AutoRun</a-checkbox></span>
+                <span :title="langConfig[lang].panel.autoRunTitle">
+                  <a-checkbox v-model:checked="tableStore.editor.mappingSpec.autoRun">{{ langConfig[lang].panel.autoRun
+                    }}</a-checkbox></span>
                 <a-button size="small" style="margin: 1px 6px 5px;" @click="transformTablebyCode">
                   <v-icon name="la-rocket-solid" scale="0.85"></v-icon>
-                  <span>Run</span>
+                  <span>{{ langConfig[lang].panel.run }}</span>
                 </a-button>
               </template>
 
               <a-tab-pane key="1">
                 <template #tab>
-                  <span style="font-size: 15px"
-                    title="The mapping specification that transforms the input table to the output table">
-                    Specification
+                  <span style="font-size: 15px" :title="langConfig[lang].panel.specTitle">
+                    {{ langConfig[lang].panel.spec }}
                   </span>
                 </template>
                 <CodeView codeType="mappingSpec" ref="specCode" />
               </a-tab-pane>
               <a-tab-pane key="2">
                 <template #tab>
-                  <span style="font-size: 15px"
-                    title="A tree data structure that contains the AreaInfo of all matched instances, starting from the root area">
-                    Matched Instances [{{ tableStore.spec.matchedInstNum }}]
+                  <span style="font-size: 15px" :title="langConfig[lang].panel.matchedInstTitle">
+                    {{ langConfig[lang].panel.matchedInst }} [{{ tableStore.spec.matchedInstNum }}]
                   </span>
                 </template>
                 <CodeView codeType="rootArea" />
@@ -81,6 +80,7 @@ import InOutTable from "@/components/InOutTable.vue";
 import CodeView from "@/components/CodeView.vue";
 import PatternVis from "@/components/PatternVis.vue";
 // import ChatBot from "@/components/ChatBot.vue";
+import { lang, langConfig } from "@/utils/lang";
 
 import { typeMapColor, TypeColor } from '@/utils/style';
 for (const key in typeMapColor) {

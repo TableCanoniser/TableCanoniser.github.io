@@ -14,6 +14,8 @@ import letterAspectRatio from './letterAspectRatio';
 import { VisTreeNode, TableStore, Selection } from "@/store/table";
 import { CellConstraint, TableCanoniserKeyWords } from '@/table-canoniser/dist/grammar';
 
+import { lang, langConfig } from "@/utils/lang";
+
 
 export type NodeData = {
   [key: string]: any,
@@ -649,7 +651,7 @@ export class TreeChart {
           .attr('stroke-width', typeNodeStyle.connectorLineWidth)
           .attr('transform', `translate(${typeNodeStyle.nodeWidth / 2}, ${typeNodeStyle.nodeHeight / 2})`)
           .attr('cursor', 'pointer')
-          .append('svg:title').text(`Width: ${node.data.width}, Height: ${node.data.height}`)
+          .append('svg:title').text(`${langConfig[lang].tree.width}${node.data.width}, ${langConfig[lang].tree.height}${node.data.height}`)
         return;
       }
 
@@ -671,7 +673,7 @@ export class TreeChart {
       }
 
       let tooltipText: any = node.data.matchs?.length;
-      tooltipText = tooltipText === undefined ? "Don't match any instances" : `Match: ${tooltipText} instances`;
+      tooltipText = tooltipText === undefined ? langConfig[lang].tree.noMatch : `${langConfig[lang].tree.matched}${tooltipText} ${langConfig[lang].tree.instances}`;
       // tooltipText += '\nPress Delete/Backspace to delete this pattern.';
 
       // @ts-ignore
@@ -684,7 +686,7 @@ export class TreeChart {
         // .attr('cursor', (d: any) => (!d.children && !d.hiddenChildren ? 'none' : 'pointer'))
         .attr('cursor', 'pointer')
         // .attr('pointer-events', (d: any) => (!d.children && !d.hiddenChildren ? 'none' : 'all'));
-        .append('svg:title').text(`Width: ${node.data.width}, Height: ${node.data.height}\nPattern Path: ${JSON.stringify(node.data.path)}\n` + tooltipText)
+        .append('svg:title').text(`${langConfig[lang].tree.width}${node.data.width}, ${langConfig[lang].tree.height}${node.data.height}\n${langConfig[lang].tree.path}${JSON.stringify(node.data.path)}\n` + tooltipText)
 
       /** 绘制节点的constraints */
       node.data.match?.constraints?.forEach((_constraint, i) => {
@@ -804,19 +806,19 @@ export class TreeChart {
             const valueCstr = constraint.valueCstr;
             // const msg = '\nPress Delete/Backspace to delete this constraint.';
             if (typeof valueCstr === 'function') {
-              return "The cell is constrained by a custom function:\nClick to see details in the Code Panel."
+              return langConfig[lang].tree.function
             } else {
               switch (valueCstr) {
                 case TableCanoniserKeyWords.String:
-                  return "The cell's data type should be a string."
+                  return langConfig[lang].tree.string
                 case TableCanoniserKeyWords.Number:
-                  return "The cell's data type should be a number."
+                  return langConfig[lang].tree.number
                 case TableCanoniserKeyWords.None:
-                  return "The cell should be an empty string, null, or undefined."
+                  return langConfig[lang].tree.none
                 case TableCanoniserKeyWords.NotNone:
-                  return "The cell should not be an empty string, null, or undefined."
+                  return langConfig[lang].tree.notNone
                 default:
-                  return "The cell should be " + valueCstr + "."
+                  return langConfig[lang].tree.equal + valueCstr + lang === 'en' ? "." : "。"
               }
             }
           })
