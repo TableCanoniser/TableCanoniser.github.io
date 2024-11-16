@@ -1,4 +1,6 @@
-export const lang: 'en' | 'cn' = 'cn'
+const url = window.location.href;
+
+export const lang: 'en' | 'cn' = url.includes('cn') ? 'cn' : 'en';
 
 export const langConfig = {
     'en': {
