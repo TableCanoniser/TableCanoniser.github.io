@@ -42,7 +42,8 @@ const evaluateConstraint = (cellValue, constraint) => {
         return typeof cellValue === 'string' && cellValue !== '' && isNaN(Number(cellValue));
     }
     if (constraint.valueCstr === grammar_1.TableCanoniserKeyWords.Number) {
-        return typeof cellValue === 'number' || (typeof cellValue === 'string' && cellValue.trim() !== cellValue && cellValue !== '' && !isNaN(Number(cellValue)));
+        // return typeof cellValue === 'number' || (typeof cellValue === 'string' && cellValue.trim() !== cellValue && cellValue !== '' && !isNaN(Number(cellValue)));
+        return typeof cellValue === 'number' || (typeof cellValue === 'string' && cellValue.trim() !== '' && !isNaN(Number(cellValue)));
     }
     if (constraint.valueCstr === grammar_1.TableCanoniserKeyWords.None) {
         return cellValue === null || cellValue === '' || cellValue === undefined;
