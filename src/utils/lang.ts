@@ -20,6 +20,7 @@ export const langConfig = {
             "patterns": "Mapping Patterns",
             "currentInst": "Current instance:",
             "match": "Match:",
+            "null": "Region",
             "region": "Region",
             "regionTitle": "Click to select a starting area in the input table. Press 'Esc' to cancel the selection mode.",
             "extract": "Extract by:",
@@ -35,6 +36,7 @@ export const langConfig = {
             "selectionMode": "Press ESC to cancel the selection mode.",
             "addConstr": "Please select the constrained cell in the input table.",
             "addSubPattern": "Please select an area in the input table.",
+            "afterClickMessage": " mode. Please select the starting area in the input table.\n Press ESC to cancel the selection mode.",
         },
         "table": {
             "input": "Input Table",
@@ -114,6 +116,7 @@ export const langConfig = {
             "patterns": "映射模式",
             "currentInst": "当前实例 :",
             "match": "匹配方式 :",
+            "null": "区域",
             "region": "区域",
             "regionTitle": "点击选择输入表中的起始区域。按ESC键取消选择模式。",
             "extract": "抽取方式 :",
@@ -129,6 +132,7 @@ export const langConfig = {
             "selectionMode": "按ESC键取消选择模式。",
             "addConstr": "请在输入表中选择约束单元格。",
             "addSubPattern": "请在输入表中选择子模式单元格区域。",
+            "afterClickMessage": "模式。请在输入表中选择起始区域。\n按ESC键取消选择模式。",
         },
         "table": {
             "input": "输入表",

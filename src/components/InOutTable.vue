@@ -204,6 +204,8 @@ const handlePreview = () => {
     tableStore.caseList.push("Custom File");
   }
   tableStore.currentCase = "Custom File";
+  // 清空映射规范
+  tableStore.editor.mappingSpec.code = tableStore.editor.mappingSpec.codePref + "[\n  // Please write the specification here\n];"
 };
 
 watch(() => tableStore.currentCase, (newVal) => {

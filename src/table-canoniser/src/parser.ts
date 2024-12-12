@@ -44,7 +44,7 @@ const evaluateConstraint = (cellValue: CellValueType, constraint: CellConstraint
         return typeof cellValue === 'string' && cellValue !== '' && isNaN(Number(cellValue));
     }
     if (constraint.valueCstr === TableCanoniserKeyWords.Number) {
-        return typeof cellValue === 'number' || (typeof cellValue === 'string' && cellValue !== '' && !isNaN(Number(cellValue)));
+        return typeof cellValue === 'number' || (typeof cellValue === 'string' && cellValue.trim() !== cellValue && cellValue !== '' && !isNaN(Number(cellValue)));
     }
     if (constraint.valueCstr === TableCanoniserKeyWords.None) {
         return cellValue === null || cellValue === '' || cellValue === undefined;

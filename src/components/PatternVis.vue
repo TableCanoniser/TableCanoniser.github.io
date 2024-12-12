@@ -23,6 +23,7 @@
                     <span>{{ langConfig[lang].pattern.extract }}</span>
                     <a-button-group style="margin-left: 6px">
                         <a-button class="legend legend-position" size="small"
+                            @click="selectMatchExtractArea('position')"
                             :title="langConfig[lang].pattern.positionTitle">{{ langConfig[lang].pattern.position
                             }}</a-button>
                         <a-button class="legend legend-context" size="small" @click="selectMatchExtractArea('context')"
@@ -239,7 +240,9 @@ const selectMatchExtractArea = (type: TypeColor) => {
     // const cursorStyle = `url(${require('@/assets/cell.png')}), auto`;
     document.body.style.cursor = 'cell';
     document.documentElement.style.setProperty('--custom-cursor', 'cell');
-    message.info("Now is in " + typeMap[type as keyof typeof typeMap] + " mode. Please select the starting area in the input table.\n Press ESC to cancel the selection mode.");
+    // message.info("Now is in " + typeMap[type as keyof typeof typeMap] + " mode. Please select the starting area in the input table.\n Press ESC to cancel the selection mode.");
+    // @ts-ignore
+    message.info((lang === 'cn' ? ("现在是" + langConfig[lang].pattern[type]) : ("Now is in " + typeMap[type])) + langConfig[lang].pattern.afterClickMessage);
     // tableStore.input_tbl.instance.rootElement.style.cursor = "cell";
     // (document.querySelector('.truncated') as HTMLElement).style.cursor = "cell"
 }
