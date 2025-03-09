@@ -15,9 +15,9 @@ app.use(pinia).use(Select).use(Tabs).use(Button).use(Upload)
 // A Vue component for including inline SVG icons from different popular iconpacks easily.
 // https://oh-vue-icons.js.org/docs   // MdFitscreenOutlined
 import { OhVueIcon, addIcons } from "oh-vue-icons";
-import { BiUpload, BiDownload, LaRocketSolid, BiArrowClockwise, IoArrowUndoOutline, IoArrowRedoOutline, BiChevronLeft, BiChevronRight } from "oh-vue-icons/icons";
+import { BiUpload, BiDownload, LaRocketSolid, BiArrowClockwise, IoArrowUndoOutline, IoArrowRedoOutline, BiChevronLeft, BiChevronRight, BiFileText, BiGithub } from "oh-vue-icons/icons";
 
-addIcons(BiUpload, BiDownload, LaRocketSolid, BiArrowClockwise, IoArrowUndoOutline, IoArrowRedoOutline, BiChevronLeft, BiChevronRight);
+addIcons(BiUpload, BiDownload, LaRocketSolid, BiArrowClockwise, IoArrowUndoOutline, IoArrowRedoOutline, BiChevronLeft, BiChevronRight, BiFileText, BiGithub);
 
 // app.config.globalProperties.$basePath = process.env.BASE_URL;
 

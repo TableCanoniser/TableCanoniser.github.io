@@ -1,7 +1,27 @@
 <template>
   <div id="panel">
     <div class="system-name">
-      <span id="system_name">TableCanoniser</span>
+      <span id="system_name">
+        <a-popover placement="bottom">
+          <template #content>
+            <div style="max-width: 441px;">
+              <b>TableCanoniser: Interactive Grammar-Powered Transformation of Messy, Non-Relational Tables to Canonical
+                Tables</b>
+              <div style="margin-top: 5px;">
+                <span>
+                  <v-icon name="bi-file-text"></v-icon>
+                  <a href="https://doi.org/10.1145/3706598.3714321" target="_blank">Paper</a>
+                </span>
+                <span style="margin-left: 10px;">
+                  <v-icon name="bi-github"></v-icon>
+                  <a href="https://github.com/TableCanoniser/TableCanoniser.github.io/" target="_blank">Code</a>
+                </span>
+              </div>
+            </div>
+          </template>
+          TableCanoniser
+        </a-popover>
+      </span>
       <span style="left: 20px; position: absolute;">
         <span style="font-size: 16px; font-weight: normal; margin-right: 5px">{{ langConfig[lang].panel.case }}</span>
         <a-select :value="currentCase" :options="caseOption" size="small" @change="handleCaseChange"
@@ -42,7 +62,7 @@
                   title="Set whether to automatically run the mapping specification after changing code" /> -->
                 <span :title="langConfig[lang].panel.autoRunTitle">
                   <a-checkbox v-model:checked="tableStore.editor.mappingSpec.autoRun">{{ langConfig[lang].panel.autoRun
-                    }}</a-checkbox></span>
+                  }}</a-checkbox></span>
                 <a-button size="small" style="margin: 1px 6px 5px;" @click="transformTablebyCode">
                   <v-icon name="la-rocket-solid" scale="0.85"></v-icon>
                   <span>{{ langConfig[lang].panel.run }}</span>
